@@ -67,11 +67,24 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Nunito
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 16px 4px}
 .card{background:var(--surf);border:1.5px solid var(--bdr);border-radius:14px;padding:14px 14px 12px}
 .card.c-total{background:var(--court);border-color:var(--court);grid-column:1/-1}
+.card.c-pending-warn{background:var(--amb-bg);border-color:var(--amb-bd);grid-column:1/-1}
+.card.c-pending-ok{background:var(--court-xl);border-color:var(--court-lt);grid-column:1/-1}
 .card-n{font-size:34px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums}
 .card.c-given .card-n{color:var(--court-lt)} .card.c-canceled .card-n{color:var(--clay)}
 .card.c-makeup .card-n{color:var(--blue)} .card.c-total .card-n{color:#fff;font-size:26px}
+.card.c-sched .card-n{color:var(--text2)} .card.c-remain .card-n{color:var(--blue)}
+.card.c-pending-warn .card-n{color:var(--amber);font-size:26px}
+.card.c-pending-ok .card-n{color:var(--court-lt);font-size:26px}
 .card-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-top:5px}
 .card.c-total .card-lbl{color:rgba(255,255,255,.75)}
+.card.c-pending-warn .card-lbl{color:var(--amber)}
+.card.c-pending-ok .card-lbl{color:var(--court-lt)}
+.card-sub{font-size:10px;color:var(--text3);margin-top:3px}
+.cards-sec{padding:4px 16px 0;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--text3)}
+/* WEEKDAY SELECTOR */
+.wday-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:4px}
+.wday-btn{border:1.5px solid var(--bdr);border-radius:8px;padding:8px 2px;text-align:center;cursor:pointer;font-size:11px;font-weight:800;color:var(--text3);background:var(--bg);transition:border-color .12s,background .12s,color .12s}
+.wday-btn.sel{border-color:var(--court-lt);background:var(--court-xl);color:var(--court-lt)}
 
 /* SECTIONS */
 main{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 72px)}
@@ -268,7 +281,7 @@ main{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 72px)}
   </div>
 </div>
 
-<!-- ─── CONFIRM DELETE ───────────────────────────────── -->
+<!-- ─── CONFIRM DELETE AULA ──────────────────────────── -->
 <div class="overlay" id="ov-confirm" onclick="handleOvClick(event,'ov-confirm')">
   <div class="sheet">
     <div class="sh-handle"></div>
@@ -279,6 +292,20 @@ main{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 72px)}
     </div>
     <button class="btn-d" onclick="deleteLesson()">Sim, excluir</button>
     <button class="btn-s" onclick="closeOverlay('ov-confirm')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ─── CONFIRM DELETE PAGAMENTO ─────────────────────── -->
+<div class="overlay" id="ov-confirm-pay" onclick="handleOvClick(event,'ov-confirm-pay')">
+  <div class="sheet">
+    <div class="sh-handle"></div>
+    <div class="cnf-box">
+      <div class="cnf-ico">💳</div>
+      <div class="cnf-title">Excluir pagamento?</div>
+      <div class="cnf-txt" id="del-pay-txt">Esta ação não pode ser desfeita.<br>O mês voltará a aparecer como não pago.</div>
+    </div>
+    <button class="btn-d" onclick="deletePayment()">Sim, excluir</button>
+    <button class="btn-s" onclick="closeOverlay('ov-confirm-pay')">Cancelar</button>
   </div>
 </div>
 
@@ -318,6 +345,22 @@ main{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 72px)}
     <div class="fld">
       <div class="flbl">Nome do professor</div>
       <input class="finput" type="text" id="s-teacher" placeholder="ex: Eduardo, Prof. Carlos…">
+    </div>
+    <div class="fld">
+      <div class="flbl">Dia da aula na semana</div>
+      <div class="wday-grid" id="wday-grid">
+        <div class="wday-btn" data-d="0" onclick="selWday(0)">Dom</div>
+        <div class="wday-btn" data-d="1" onclick="selWday(1)">Seg</div>
+        <div class="wday-btn" data-d="2" onclick="selWday(2)">Ter</div>
+        <div class="wday-btn" data-d="3" onclick="selWday(3)">Qua</div>
+        <div class="wday-btn" data-d="4" onclick="selWday(4)">Qui</div>
+        <div class="wday-btn" data-d="5" onclick="selWday(5)">Sex</div>
+        <div class="wday-btn" data-d="6" onclick="selWday(6)">Sáb</div>
+      </div>
+    </div>
+    <div class="fld">
+      <div class="flbl">Horário da aula (opcional)</div>
+      <input class="finput" type="time" id="s-time">
     </div>
 
     <div class="stg-sec">Cobrança</div>
@@ -365,8 +408,9 @@ main{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 72px)}
 
 <script>
 // ─── DATA ────────────────────────────────────────────────────────────────────
-let DB = { lessons: [], payments: [], settings: { teacher: 'Professor', price: 0, priceMode: 'per_lesson', monthlyPrice: 0, payDayStart: 1, payDayEnd: 7, theme: 'auto' } };
+let DB = { lessons: [], payments: [], settings: { teacher: 'Professor', price: 0, priceMode: 'per_lesson', monthlyPrice: 0, payDayStart: 1, payDayEnd: 7, lessonDay: null, lessonTime: '', theme: 'auto' } };
 let SEL_PRICE_MODE = 'per_lesson';
+let SEL_WDAY = null;
 let CUR = { year: 0, month: 0 }; // 0-indexed month
 let EDITING_ID = null;
 let SEL_TYPE = 'given';
@@ -421,6 +465,24 @@ function lessonsForMonth(key) {
 
 function billableCount(key) {
   return DB.lessons.filter(l => l.date.slice(0,7) === key && (l.type === 'given' || l.type === 'makeup')).length;
+}
+
+function scheduledCount(year, month) {
+  const d = DB.settings.lessonDay;
+  if (d === null || d === undefined || d === '') return null;
+  const day = parseInt(d);
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  let count = 0;
+  for (let i = 1; i <= daysInMonth; i++) {
+    if (new Date(year, month, i).getDay() === day) count++;
+  }
+  return count;
+}
+
+function pendingMakeups() {
+  const owedByTeacher = DB.lessons.filter(l => l.type === 'canceled_teacher').length;
+  const done          = DB.lessons.filter(l => l.type === 'makeup').length;
+  return Math.max(0, owedByTeacher - done);
 }
 
 function calcAmount(key) {
@@ -505,21 +567,70 @@ function renderSummary() {
   const given   = lessons.filter(l => l.type === 'given').length;
   const canceled= lessons.filter(l => l.type.startsWith('canceled')).length;
   const makeup  = lessons.filter(l => l.type === 'makeup').length;
-  const billable= given + makeup;
-  const total   = calcAmount(key);
-  const s       = DB.settings;
+  const billable  = given + makeup;
+  const total     = calcAmount(key);
+  const s         = DB.settings;
+  const sched     = scheduledCount(CUR.year, CUR.month); // null if not configured
+  const registered= given + canceled; // lessons already logged this month
+  const remaining = sched !== null ? Math.max(0, sched - registered) : null;
+  const pending   = pendingMakeups(); // global accumulator
   const modeLabel = s.priceMode === 'monthly' ? 'Mensal fixo' : `${billable} aula${billable!==1?'s':''}`;
-  const totalLabel = total > 0 ? 'R$ '+total.toFixed(2).replace('.',',') : (s.priceMode==='monthly' ? 'Mensal fixo' : billable+' aulas');
-  const statusLabel = isPaid(key) ? '✅ Pago' : (total > 0 ? 'A pagar' : 'Configure o valor');
+  const totalLabel= total > 0 ? 'R$ '+total.toFixed(2).replace('.',',') : (s.priceMode==='monthly' ? 'Mensal fixo' : billable+' aulas');
+  const statusLabel= isPaid(key) ? '✅ Pago' : (total > 0 ? 'A pagar' : 'Configure o valor');
+
+  // Weekday name for subtitle
+  const wdays = ['dom','seg','ter','qua','qui','sex','sáb'];
+  const wdayName = s.lessonDay !== null && s.lessonDay !== '' ? wdays[parseInt(s.lessonDay)] : null;
+
+  const schedCard = sched !== null
+    ? `<div class="card c-sched">
+        <div class="card-n">${sched}</div>
+        <div class="card-lbl">📅 Programadas</div>
+        ${wdayName ? `<div class="card-sub">${wdayName}s do mês</div>` : ''}
+       </div>`
+    : `<div class="card c-sched" style="cursor:pointer" onclick="openSettings()">
+        <div class="card-n" style="font-size:22px">—</div>
+        <div class="card-lbl">📅 Programadas</div>
+        <div class="card-sub">configure o dia ⚙️</div>
+       </div>`;
+
+  const remainCard = remaining !== null
+    ? `<div class="card c-remain">
+        <div class="card-n">${remaining}</div>
+        <div class="card-lbl">📋 Faltam registrar</div>
+        <div class="card-sub">aulas deste mês</div>
+       </div>`
+    : `<div class="card c-remain">
+        <div class="card-n">${given}</div>
+        <div class="card-lbl">✅ Dadas</div>
+        <div class="card-sub">+ ${makeup} reposição${makeup!==1?'ões':''}</div>
+       </div>`;
+
+  const pendingCard = `<div class="card ${pending > 0 ? 'c-pending-warn' : 'c-pending-ok'}">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div class="card-n">${pending}</div>
+        <div class="card-lbl">${pending > 0 ? '⏳ Reposições pendentes' : '✅ Reposições em dia'}</div>
+        <div class="card-sub" style="margin-top:4px">
+          ${DB.lessons.filter(l=>l.type==='canceled_teacher').length} cancelada${DB.lessons.filter(l=>l.type==='canceled_teacher').length!==1?'s':''} pelo prof.
+          · ${DB.lessons.filter(l=>l.type==='makeup').length} reposição${DB.lessons.filter(l=>l.type==='makeup').length!==1?'ões':''} feita${DB.lessons.filter(l=>l.type==='makeup').length!==1?'s':''}
+          · acumulado geral
+        </div>
+      </div>
+      <div style="font-size:32px">${pending > 0 ? '🎾' : '🏆'}</div>
+    </div>
+  </div>`;
 
   const payBtnHtml = isPaid(key)
-    ? `<div style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--court-xl);border-radius:10px;margin:0 16px;font-size:13px;font-weight:700;color:var(--court-lt)">✅ Pagamento registrado</div>`
-    : `<button onclick="openPayForMonth('${key}')" style="display:flex;align-items:center;justify-content:center;gap:8px;width:calc(100% - 32px);margin:0 16px;padding:13px;background:var(--court-lt);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:900;cursor:pointer;font-family:inherit">💳 Registrar pagamento${total > 0 ? ' · R$ '+total.toFixed(2).replace('.',',') : ''}</button>`;
+    ? `<div style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--court-xl);border-radius:10px;margin:4px 16px 0;font-size:13px;font-weight:700;color:var(--court-lt)">✅ Pagamento registrado</div>`
+    : `<button onclick="openPayForMonth('${key}')" style="display:flex;align-items:center;justify-content:center;gap:8px;width:calc(100% - 32px);margin:4px 16px 0;padding:13px;background:var(--court-lt);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:900;cursor:pointer;font-family:inherit">💳 Registrar pagamento${total > 0 ? ' · R$ '+total.toFixed(2).replace('.',',') : ''}</button>`;
 
   document.getElementById('summary-cards').innerHTML = `
-    <div class="card c-given"><div class="card-n">${given}</div><div class="card-lbl">✅ Aulas dadas</div></div>
+    ${schedCard}
+    ${remainCard}
+    <div class="card c-given"><div class="card-n">${given}</div><div class="card-lbl">✅ Dadas</div></div>
     <div class="card c-canceled"><div class="card-n">${canceled}</div><div class="card-lbl">❌ Canceladas</div></div>
-    <div class="card c-makeup"><div class="card-n">${makeup}</div><div class="card-lbl">🔄 Reposições</div></div>
+    ${pendingCard}
     <div class="card c-total">
       <div class="card-n">${totalLabel}</div>
       <div class="card-lbl">${statusLabel} · ${modeLabel}</div>
@@ -552,6 +663,7 @@ function renderPayments() {
         <div class="pay-detail">${p.lessonsCount} aula${p.lessonsCount!==1?'s':''} · pago em ${dt}${p.notes ? ' · '+esc(p.notes) : ''}</div>
       </div>
       <div class="pay-amt">R$ ${Number(p.amount).toFixed(2).replace('.',',')}</div>
+      <button onclick="confirmDeletePayment('${p.id}')" style="background:none;border:none;cursor:pointer;color:var(--clay);font-size:18px;padding:4px 0 4px 10px;flex-shrink:0" aria-label="Excluir pagamento">🗑️</button>
     </div>`;
   }).join('');
 }
@@ -631,6 +743,26 @@ function deleteLesson() {
 }
 
 // ─── PAYMENT ──────────────────────────────────────────────────────────────────
+let DEL_PAY_ID = null;
+
+function confirmDeletePayment(id) {
+  const p = DB.payments.find(x => x.id === id);
+  if (!p) return;
+  DEL_PAY_ID = id;
+  const [y,m] = p.month.split('-').map(Number);
+  const lbl = monthLabel(y, m-1);
+  document.getElementById('del-pay-txt').textContent =
+    `Pagamento de ${lbl} (R$ ${Number(p.amount).toFixed(2).replace('.',',')}) será removido. O mês voltará a aparecer como não pago.`;
+  document.getElementById('ov-confirm-pay').classList.add('open');
+}
+
+function deletePayment() {
+  if (!DEL_PAY_ID) return;
+  DB.payments = DB.payments.filter(p => p.id !== DEL_PAY_ID);
+  DEL_PAY_ID = null;
+  save(); closeOverlay('ov-confirm-pay'); render();
+}
+
 function openPayForMonth(key) {
   PAY_MONTH = key;
   openPayModal();
@@ -665,8 +797,11 @@ function openSettings() {
   document.getElementById('s-monthly').value    = s.monthlyPrice || '';
   document.getElementById('s-pay-start').value  = s.payDayStart  || 1;
   document.getElementById('s-pay-end').value    = s.payDayEnd    || 7;
+  document.getElementById('s-time').value       = s.lessonTime   || '';
   SEL_PRICE_MODE = s.priceMode || 'per_lesson';
+  SEL_WDAY = s.lessonDay !== undefined ? s.lessonDay : null;
   updatePriceModeUI();
+  updateWdayUI();
   updateThemeBtns();
   document.getElementById('ov-settings').classList.add('open');
 }
@@ -680,7 +815,20 @@ function saveSettings() {
   s.payDayStart  = Math.min(28, Math.max(1, parseInt(document.getElementById('s-pay-start').value) || 1));
   s.payDayEnd    = Math.min(28, Math.max(1, parseInt(document.getElementById('s-pay-end').value)   || 7));
   if (s.payDayEnd < s.payDayStart) s.payDayEnd = s.payDayStart;
+  s.lessonDay    = SEL_WDAY;
+  s.lessonTime   = document.getElementById('s-time').value || '';
   save(); closeOverlay('ov-settings'); render();
+}
+
+function selWday(d) {
+  SEL_WDAY = (SEL_WDAY === d) ? null : d; // toggle off if same
+  updateWdayUI();
+}
+
+function updateWdayUI() {
+  document.querySelectorAll('.wday-btn').forEach(b => {
+    b.classList.toggle('sel', parseInt(b.dataset.d) === SEL_WDAY);
+  });
 }
 
 function setPriceMode(mode) {
