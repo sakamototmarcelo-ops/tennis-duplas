@@ -281,6 +281,21 @@ main{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 72px)}
   </div>
 </div>
 
+<!-- ─── EXPORT MODAL ─────────────────────────────────── -->
+<div class="overlay" id="ov-export" onclick="handleOvClick(event,'ov-export')">
+  <div class="sheet">
+    <div class="sh-handle"></div>
+    <div class="sh-title">Backup exportado</div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:12px;line-height:1.6">
+      Se o download não iniciou automaticamente, copie o texto abaixo e salve num arquivo
+      <strong id="export-json-name"></strong> no seu celular ou nuvem.
+    </p>
+    <textarea id="export-json-area" class="fta" style="font-size:10px;font-family:monospace;min-height:120px" readonly onclick="this.select()"></textarea>
+    <button class="btn-p" onclick="copyExportJson()">📋 Copiar JSON</button>
+    <button class="btn-s" onclick="closeOverlay('ov-export')">Fechar</button>
+  </div>
+</div>
+
 <!-- ─── CONFIRM DELETE AULA ──────────────────────────── -->
 <div class="overlay" id="ov-confirm" onclick="handleOvClick(event,'ov-confirm')">
   <div class="sheet">
@@ -870,17 +885,24 @@ function updateThemeBtns() {
 // ─── BACKUP ───────────────────────────────────────────────────────────────────
 function exportBackup() {
   const json = JSON.stringify(DB, null, 2);
-  const blob = new Blob([json], { type: 'application/json' });
-  const url  = URL.createObjectURL(blob);
   const date = new Date().toISOString().slice(0, 10);
-  const a    = document.createElement('a');
-  a.href     = url;
-  a.download = `aulas_tenis_${date}.json`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(() => URL.revokeObjectURL(url), 2000);
-  showBackupMsg('✅ Arquivo baixado: aulas_tenis_' + date + '.json', true);
+  const filename = `aulas_tenis_${date}.json`;
+
+  // Tenta download direto (funciona no arquivo local / servidor HTTP)
+  try {
+    const blob = new Blob([json], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  } catch(e) {}
+
+  // Sempre exibe modal de cópia como garantia (útil no Artifact)
+  document.getElementById('export-json-name').textContent = filename;
+  document.getElementById('export-json-area').value = json;
+  document.getElementById('ov-export').classList.add('open');
 }
 
 function importBackup(e) {
@@ -903,6 +925,23 @@ function importBackup(e) {
     e.target.value = '';
   };
   reader.readAsText(file);
+}
+
+function copyExportJson() {
+  const ta = document.getElementById('export-json-area');
+  ta.select();
+  try {
+    navigator.clipboard.writeText(ta.value).then(() => {
+      showBackupMsg('✅ JSON copiado! Cole num arquivo .json e guarde.', true);
+    }).catch(() => {
+      document.execCommand('copy');
+      showBackupMsg('✅ JSON copiado!', true);
+    });
+  } catch(e) {
+    document.execCommand('copy');
+    showBackupMsg('✅ JSON copiado!', true);
+  }
+  closeOverlay('ov-export');
 }
 
 function showBackupMsg(txt, ok) {
