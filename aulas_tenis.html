@@ -883,12 +883,21 @@ function updateThemeBtns() {
 }
 
 // ─── BACKUP ───────────────────────────────────────────────────────────────────
-function exportBackup() {
+async function exportBackup() {
   const json = JSON.stringify(DB, null, 2);
   const date = new Date().toISOString().slice(0, 10);
   const filename = `aulas_tenis_${date}.json`;
 
-  // Tenta download direto (funciona no arquivo local / servidor HTTP)
+  // Tenta capability de downloads do Artifact (viewer claude.ai)
+  try {
+    const dl = await window.claude.use('downloads');
+    if (dl) {
+      await dl.save({ filename, data: json });
+      return;
+    }
+  } catch(e) { /* fora do Artifact ou usuário recusou — usa fallback */ }
+
+  // Fallback: blob download (funciona localmente ou em servidor HTTP)
   try {
     const blob = new Blob([json], { type: 'application/json' });
     const url  = URL.createObjectURL(blob);
@@ -899,7 +908,7 @@ function exportBackup() {
     setTimeout(() => URL.revokeObjectURL(url), 2000);
   } catch(e) {}
 
-  // Sempre exibe modal de cópia como garantia (útil no Artifact)
+  // Último recurso: modal com textarea para copiar
   document.getElementById('export-json-name').textContent = filename;
   document.getElementById('export-json-area').value = json;
   document.getElementById('ov-export').classList.add('open');
