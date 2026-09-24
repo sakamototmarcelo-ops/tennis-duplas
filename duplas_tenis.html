@@ -1,0 +1,2254 @@
+<title>Duplas para Amadores</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap">
+
+<style>
+  :root {
+    --clay:    #C8704A;
+    --clay-lt: #E8956D;
+    --green:   #3D6B52;
+    --green-lt:#5A8F6F;
+    --navy:    #1A2B3C;
+    --navy-lt: #2C4560;
+    --cream:   #F6F2EB;
+    --sage:    #E4EDE7;
+    --sand:    #EDE8DF;
+    --text:    #1A2B3C;
+    --text-2:  #4A5D6E;
+    --text-3:  #7B8FA0;
+    --card-bg: #FFFFFF;
+    --border:  #D8D0C4;
+    --gold:    #C49A2A;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --clay:    #D4845A;
+      --clay-lt: #E8A07A;
+      --green:   #5A9472;
+      --green-lt:#70AB88;
+      --navy:    #0D1B2A;
+      --navy-lt: #1A2F44;
+      --cream:   #0F1E2D;
+      --sage:    #162A22;
+      --sand:    #172030;
+      --text:    #E8E2D8;
+      --text-2:  #A8B8C8;
+      --text-3:  #6A7E8F;
+      --card-bg: #1A2B3C;
+      --border:  #2C3F52;
+      --gold:    #D4AA3A;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --clay:    #D4845A;
+    --clay-lt: #E8A07A;
+    --green:   #5A9472;
+    --green-lt:#70AB88;
+    --navy:    #0D1B2A;
+    --navy-lt: #1A2F44;
+    --cream:   #0F1E2D;
+    --sage:    #162A22;
+    --sand:    #172030;
+    --text:    #E8E2D8;
+    --text-2:  #A8B8C8;
+    --text-3:  #6A7E8F;
+    --card-bg: #1A2B3C;
+    --border:  #2C3F52;
+    --gold:    #D4AA3A;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    padding-inline: 16px;
+    padding-block: 0;
+  }
+
+  /* HEADER */
+  .hero {
+    background: var(--navy);
+    margin-inline: -16px;
+    padding: 36px 24px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent 0,
+      transparent 18px,
+      rgba(255,255,255,.03) 18px,
+      rgba(255,255,255,.03) 19px
+    );
+  }
+  .hero-court {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 160px;
+    opacity: .06;
+    overflow: hidden;
+  }
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--clay-lt);
+    margin-bottom: 8px;
+  }
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(36px, 8vw, 56px);
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+    text-wrap: balance;
+    margin-bottom: 10px;
+  }
+  .hero h1 span { color: var(--clay-lt); }
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,.62);
+    max-width: 480px;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 3px;
+    background: rgba(255,255,255,.1);
+    color: rgba(255,255,255,.8);
+    border: 1px solid rgba(255,255,255,.15);
+  }
+
+  /* NAV TABS */
+  .tabs-wrap {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 100;
+    background: var(--navy-lt);
+    margin-inline: -16px;
+  }
+  .tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-inline: 8px;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.55);
+    padding: 13px 14px 11px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: color .2s, border-color .2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: rgba(255,255,255,.85); }
+  .tab-btn.active {
+    color: #fff;
+    border-bottom-color: var(--clay);
+  }
+
+  /* CONTENT */
+  .section { display: none; padding-block: 28px; }
+  .section.active { display: block; }
+
+  /* SECTION TITLE */
+  .sec-head {
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--border);
+  }
+  .sec-head h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--clay);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .sec-head p {
+    font-size: 14px;
+    color: var(--text-2);
+    font-style: italic;
+  }
+
+  /* STAT TILES */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .stat-tile {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 14px 14px;
+    border-top: 3px solid var(--clay);
+  }
+  .stat-tile.green { border-top-color: var(--green); }
+  .stat-tile.gold  { border-top-color: var(--gold);  }
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--clay);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-tile.green .stat-num { color: var(--green); }
+  .stat-tile.gold  .stat-num { color: var(--gold);  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-2);
+    margin-top: 4px;
+    line-height: 1.35;
+  }
+  .stat-source {
+    font-size: 10px;
+    color: var(--text-3);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+  }
+  .card-icon {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card-icon.green { color: var(--green); }
+  .card-icon .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+  .card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .card p {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.55;
+  }
+
+  /* COURT DIAGRAM */
+  .court-wrap {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .court-wrap h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+  .court-wrap p {
+    font-size: 13px;
+    color: var(--text-2);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+  .diagram-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  /* PRIORITY LIST */
+  .prio-list { list-style: none; margin-bottom: 24px; }
+  .prio-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .prio-item:last-child { border-bottom: none; }
+  .prio-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--clay);
+    min-width: 32px;
+    line-height: 1;
+    padding-top: 2px;
+  }
+  .prio-body h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .prio-body p { font-size: 13px; color: var(--text-2); }
+
+  /* ALERT BOX */
+  .alert {
+    background: var(--sage);
+    border-left: 4px solid var(--green);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--text-2);
+  }
+  .alert strong { color: var(--green); font-family: 'Barlow Condensed', sans-serif; font-size: 15px; letter-spacing: .04em; }
+  .alert.clay {
+    background: #FBF0EB;
+    border-color: var(--clay);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .alert.clay { background: #2A1A12; }
+  }
+  :root[data-theme="dark"] .alert.clay { background: #2A1A12; }
+  .alert.clay strong { color: var(--clay); }
+
+  /* FORMATION SVG */
+  svg.court {
+    width: 100%;
+    max-width: 220px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* CHECKLIST */
+  .check-list { list-style: none; margin-bottom: 20px; }
+  .check-list li {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text-2);
+  }
+  .check-list li:last-child { border-bottom: none; }
+  .check-list li::before {
+    content: '✓';
+    color: var(--green);
+    font-weight: 700;
+    font-size: 15px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  h2.sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 24px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) h2.sub { color: var(--text); }
+  }
+  :root[data-theme="dark"] h2.sub { color: var(--text); }
+
+  /* SOURCES */
+  .sources {
+    background: var(--sand);
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 32px;
+    margin-bottom: 12px;
+  }
+  .sources h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 8px;
+  }
+  .sources a {
+    display: block;
+    font-size: 12px;
+    color: var(--green);
+    text-decoration: none;
+    padding: 2px 0;
+    line-height: 1.5;
+  }
+  .sources a:hover { text-decoration: underline; }
+
+  .badge {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    background: var(--clay);
+    color: #fff;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  .badge.green { background: var(--green); }
+
+  /* SCENARIO CARDS */
+  .scenario {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .scenario-head {
+    background: var(--navy);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  :root[data-theme="dark"] .scenario-head { background: var(--navy-lt); }
+  .scenario-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--clay-lt);
+    flex-shrink: 0;
+  }
+  .scenario-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .scenario-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  @media (max-width: 560px) {
+    .scenario-body { grid-template-columns: 1fr; }
+  }
+  .scenario-col {
+    padding: 14px 16px;
+  }
+  .scenario-col + .scenario-col {
+    border-left: 1px solid var(--border);
+  }
+  @media (max-width: 560px) {
+    .scenario-col + .scenario-col {
+      border-left: none;
+      border-top: 1px solid var(--border);
+    }
+  }
+  .scenario-col-head {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid currentColor;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .scenario-col-head.do   { color: var(--green); }
+  .scenario-col-head.dont { color: #B03A2E; }
+  .scenario-col ul { list-style: none; }
+  .scenario-col ul li {
+    font-size: 13px;
+    color: var(--text-2);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    line-height: 1.45;
+  }
+  .scenario-col ul li:last-child { border-bottom: none; }
+  .scenario-col.do-col   ul li::before { content: '✓'; color: var(--green);  font-weight: 700; font-size: 13px; flex-shrink: 0; }
+  .scenario-col.dont-col ul li::before { content: '✕'; color: #B03A2E; font-weight: 700; font-size: 13px; flex-shrink: 0; }
+
+  @media (max-width: 500px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .card-grid  { grid-template-columns: 1fr; }
+    .diagram-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="hero">
+  <div class="hero-eyebrow">USTA · ITF · Tennis Europe · ALTA</div>
+  <h1>Duplas no Tênis<br><span>para Amadores</span></h1>
+  <p class="hero-sub">Estatísticas, técnicas, formações e táticas adaptadas ao jogo recreativo — com base nos principais sites dos EUA e Europa.</p>
+  <div class="hero-tags">
+    <span class="tag">Posicionamento</span>
+    <span class="tag">Formações</span>
+    <span class="tag">Saque & Return</span>
+    <span class="tag">Net Play</span>
+    <span class="tag">Comunicação</span>
+  </div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" onclick="showTab('stats',this)" role="tab">Estatísticas</button>
+    <button class="tab-btn" onclick="showTab('tecnicas',this)" role="tab">Técnicas</button>
+    <button class="tab-btn" onclick="showTab('formacoes',this)" role="tab">Formações</button>
+    <button class="tab-btn" onclick="showTab('taticas',this)" role="tab">Táticas</button>
+    <button class="tab-btn" onclick="showTab('erros',this)" role="tab">Erros Comuns</button>
+    <button class="tab-btn" onclick="showTab('mais50',this)" role="tab">+50 Anos</button>
+    <button class="tab-btn" onclick="showTab('treinos',this)" role="tab">Treinos</button>
+    <button class="tab-btn" onclick="showTab('aquecimento',this)" role="tab">Aquecimento</button>
+    <button class="tab-btn" onclick="showTab('recuperacao',this)" role="tab">Recuperação</button>
+    <button class="tab-btn" onclick="showTab('lesoes',this)" role="tab">Lesões</button>
+    <button class="tab-btn" onclick="showTab('nutricao',this)" role="tab">Nutrição</button>
+    <button class="tab-btn" onclick="showTab('cenarios',this)" role="tab">Cenários</button>
+  </div>
+</div>
+
+<!-- ============ ESTATÍSTICAS ============ -->
+<div id="stats" class="section active">
+  <div class="sec-head">
+    <h2>O que os números dizem</h2>
+    <p>Dados de estudos acadêmicos e federações — adaptados à realidade do jogador amador.</p>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-tile">
+      <div class="stat-num">81%</div>
+      <div class="stat-label">dos pontos de duplas terminam em 4 jogadas ou menos</div>
+      <div class="stat-source">TennisNation / ITF Research</div>
+    </div>
+    <div class="stat-tile green">
+      <div class="stat-num">72%</div>
+      <div class="stat-label">dos pontos são vencidos pela dupla que controla a rede</div>
+      <div class="stat-source">USTA Coaches Database</div>
+    </div>
+    <div class="stat-tile gold">
+      <div class="stat-num">60%</div>
+      <div class="stat-label">das devoluções de amadores vão para o cruzado — o mais previsível</div>
+      <div class="stat-source">Tennis Creative / Ace Analytics</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-num">3</div>
+      <div class="stat-label">principais jogadas: saque, devolução e 1.° voleio — as mais decisivas</div>
+      <div class="stat-source">TennisNation Data Guide</div>
+    </div>
+    <div class="stat-tile green">
+      <div class="stat-num">50%</div>
+      <div class="stat-label">é o risco que a formação I impõe ao devolvedor em cada ponto</div>
+      <div class="stat-source">Wikipedia / USTA</div>
+    </div>
+    <div class="stat-tile gold">
+      <div class="stat-num">↑35%</div>
+      <div class="stat-label">ganho de pontos ao poachar quando o adversário está fora de equilíbrio</div>
+      <div class="stat-source">TheChamplair / Tennis Server</div>
+    </div>
+  </div>
+
+  <div class="alert clay">
+    <strong>Por que o amador perde pontos?</strong><br>
+    Erros não forçados correspondem a mais de 60 % dos pontos perdidos no tênis recreativo. Quase metade desses erros acontecem na devolução do saque — uma pancada muitas vezes negligenciada no treino.
+  </div>
+
+  <h2 class="sub">Superfícies e duplas amador (EUA & Europa)</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Saibro (Europa)</div>
+      <h3>Rallys mais longos, rede menos dominante</h3>
+      <p>Na Europa, a maioria dos torneios amadores é disputada no saibro. Os pontos duram mais, mas a regra de ouro continua: quem chega à rede com bola consistente vence o ponto em ~65 % das vezes.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Hard Court (EUA)</div>
+      <h3>Saque + net rush é estratégia dominante</h3>
+      <p>Na USTA league play (nível 3.0–4.0), a combinação saque no corpo + subida à rede é o padrão mais eficiente. Pontos são mais curtos — os 3 primeiros toques decidem 75 % dos pontos.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TÉCNICAS ============ -->
+<div id="tecnicas" class="section">
+  <div class="sec-head">
+    <h2>Técnicas essenciais</h2>
+    <p>Os golpes que mais importam nas duplas — e como amadores devem treiná-los.</p>
+  </div>
+
+  <ol class="prio-list">
+    <li class="prio-item">
+      <div class="prio-num">01</div>
+      <div class="prio-body">
+        <h4>Saque — consistência antes de velocidade</h4>
+        <p>Amadores devem focar em sacar para o corpo do devolvedor ou para o T (cruzado). Saques para o corpo dificultam o retorno cruzado e facilitam o voleio do parceiro. Erro duplo é o maior presente que se pode dar ao adversário.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">02</div>
+      <div class="prio-body">
+        <h4>Devolução — o golpe mais subestimado</h4>
+        <p>Na maioria dos times amadores, a devolução é o elo mais fraco. A regra: devolva profundo cruzado e baixo — impede o voleio do parceiro do sacador. Devolução nos pés do sacador (lob ou drive) vale mais do que tentar winner.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">03</div>
+      <div class="prio-body">
+        <h4>Voleio — posição e simplicidade</h4>
+        <p>O primeiro voleio é o mais importante. Não precisa ser winner — deve ser profundo e direcionado. O erro clássico do amador é tentar encaixar o winner antes de estar em boa posição. Voleios baixos: bloqueie, não balance.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">04</div>
+      <div class="prio-body">
+        <h4>Lob — a arma secreta do amador</h4>
+        <p>Adversários na rede são vulneráveis ao lob. Um lob profundo bem executado força a smash defensiva e abre campo. O lob de devolução (contra formação australiana ou I) é arma letal quando o parceiro do sacador está na rede.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">05</div>
+      <div class="prio-body">
+        <h4>Smash — não espere a bola cair</h4>
+        <p>Amadores frequentemente recuam demais esperando o lob. Recomendação: avance para o smash sempre que possível — a posição na rede é vantagem demais para abandonar. Smashe com ~80 % de força visando o pé do adversário.</p>
+      </div>
+    </li>
+  </ol>
+
+  <div class="alert">
+    <strong>Dica USTA para o jogo recreativo</strong><br>
+    "Down the middle solves the riddle" — bola pelo meio resolve a dúvida. No amador, a comunicação entre parceiros sobre quem pega a bola no meio é o que mais diferencia uma boa dupla de uma medíocre.
+  </div>
+
+  <h2 class="sub">Check-list do bom jogador de duplas</h2>
+  <ul class="check-list">
+    <li>Mover-se junto com o parceiro — lateral e para frente, sempre sincronizado</li>
+    <li>Comunicar antes de cada ponto: "minha" / "sua" / "poach" / "vou poachar"</li>
+    <li>Não ficar parado na linha de serviço — zona de ninguém, a pior posição</li>
+    <li>Após devolução, avançar para a rede (quando a devolução for boa)</li>
+    <li>Na rede, manter-se a ~3–4 metros da rede — nem encostado, nem na linha de serviço</li>
+    <li>Após lob recebido, um jogador busca o smash e o parceiro recua para cobrir</li>
+    <li>Sempre variar o saque — corpo, T, wide — para evitar a leitura do adversário</li>
+  </ul>
+</div>
+
+<!-- ============ FORMAÇÕES ============ -->
+<div id="formacoes" class="section">
+  <div class="sec-head">
+    <h2>Formações e posicionamentos</h2>
+    <p>Como as duplas se posicionam — e quando usar cada formação.</p>
+  </div>
+
+  <div class="diagram-grid">
+    <div class="court-wrap">
+      <h3>Formação Padrão <span class="badge green">Mais usada</span></h3>
+      <svg class="court" viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- court background -->
+        <rect width="200" height="280" fill="#3D6B52" rx="4"/>
+        <!-- court lines -->
+        <rect x="20" y="10" width="160" height="260" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
+        <!-- center line -->
+        <line x1="100" y1="10" x2="100" y2="270" stroke="rgba(255,255,255,.35)" stroke-width="1"/>
+        <!-- service line top -->
+        <line x1="20" y1="90" x2="180" y2="90" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
+        <!-- service line bottom -->
+        <line x1="20" y1="190" x2="180" y2="190" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
+        <!-- net -->
+        <line x1="15" y1="140" x2="185" y2="140" stroke="white" stroke-width="3"/>
+        <!-- NET label -->
+        <text x="100" y="136" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="rgba(255,255,255,.6)">REDE</text>
+        <!-- TEAM A: sacador + parceiro na rede -->
+        <!-- Sacador: bottom center-right -->
+        <circle cx="115" cy="240" r="9" fill="#C8704A" stroke="white" stroke-width="1.5"/>
+        <text x="115" y="244" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="white" font-weight="700">S</text>
+        <!-- Parceiro na rede -->
+        <circle cx="145" cy="163" r="9" fill="#C8704A" stroke="white" stroke-width="1.5"/>
+        <text x="145" y="167" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="white" font-weight="700">P</text>
+        <!-- TEAM B: devolvedor + parceiro -->
+        <circle cx="85" cy="45" r="9" fill="#1A2B3C" stroke="white" stroke-width="1.5"/>
+        <text x="85" y="49" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="white" font-weight="700">D</text>
+        <circle cx="55" cy="117" r="9" fill="#1A2B3C" stroke="white" stroke-width="1.5"/>
+        <text x="55" y="121" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="white" font-weight="700">P</text>
+        <!-- labels -->
+        <text x="100" y="275" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="rgba(255,255,255,.5)">EQUIPE QUE SACA ↓</text>
+        <text x="100" y="18" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="rgba(255,255,255,.5)">EQUIPE QUE DEVOLVE ↑</text>
+      </svg>
+      <p><strong>S</strong> = Sacador &nbsp;|&nbsp; <strong>P</strong> = Parceiro na rede (half-volley position) &nbsp;|&nbsp; <strong>D</strong> = Devolvedor</p>
+    </div>
+
+    <div class="court-wrap">
+      <h3>Formação Australiana <span class="badge">Anti-cruzado</span></h3>
+      <svg class="court" viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="280" fill="#3D6B52" rx="4"/>
+        <rect x="20" y="10" width="160" height="260" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
+        <line x1="100" y1="10" x2="100" y2="270" stroke="rgba(255,255,255,.35)" stroke-width="1"/>
+        <line x1="20" y1="90" x2="180" y2="90" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
+        <line x1="20" y1="190" x2="180" y2="190" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
+        <line x1="15" y1="140" x2="185" y2="140" stroke="white" stroke-width="3"/>
+        <text x="100" y="136" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="rgba(255,255,255,.6)">REDE</text>
+        <!-- Sacador lado direito, parceiro MESMO lado -->
+        <circle cx="115" cy="240" r="9" fill="#C8704A" stroke="white" stroke-width="1.5"/>
+        <text x="115" y="244" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="white" font-weight="700">S</text>
+        <!-- Parceiro mesmo lado do sacador -->
+        <circle cx="115" cy="163" r="9" fill="#C8704A" stroke="white" stroke-width="1.5"/>
+        <text x="115" y="167" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="white" font-weight="700">P</text>
+        <!-- seta indicando posição diferente -->
+        <text x="72" y="175" font-family="Barlow Condensed,sans-serif" font-size="10" fill="#C8704A" font-weight="700">← MESMO LADO!</text>
+        <!-- adversários -->
+        <circle cx="85" cy="45" r="9" fill="#1A2B3C" stroke="white" stroke-width="1.5"/>
+        <text x="85" y="49" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="white" font-weight="700">D</text>
+        <circle cx="55" cy="117" r="9" fill="#1A2B3C" stroke="white" stroke-width="1.5"/>
+        <text x="55" y="121" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="white" font-weight="700">P</text>
+        <text x="100" y="275" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="rgba(255,255,255,.5)">EQUIPE QUE SACA ↓</text>
+        <text x="100" y="18" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="rgba(255,255,255,.5)">EQUIPE QUE DEVOLVE ↑</text>
+      </svg>
+      <p>Parceiro fica no <strong>mesmo lado do sacador</strong> — força o devolvedor a abrir pela paralela (o golpe mais difícil). Muito eficaz contra devolvedores agressivos no cruzado.</p>
+    </div>
+
+    <div class="court-wrap">
+      <h3>Formação I <span class="badge">Confusão máxima</span></h3>
+      <svg class="court" viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="280" fill="#3D6B52" rx="4"/>
+        <rect x="20" y="10" width="160" height="260" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
+        <line x1="100" y1="10" x2="100" y2="270" stroke="rgba(255,255,255,.35)" stroke-width="1"/>
+        <line x1="20" y1="90" x2="180" y2="90" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
+        <line x1="20" y1="190" x2="180" y2="190" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
+        <line x1="15" y1="140" x2="185" y2="140" stroke="white" stroke-width="3"/>
+        <text x="100" y="136" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="rgba(255,255,255,.6)">REDE</text>
+        <!-- Sacador no centro -->
+        <circle cx="100" cy="240" r="9" fill="#C8704A" stroke="white" stroke-width="1.5"/>
+        <text x="100" y="244" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="white" font-weight="700">S</text>
+        <!-- Parceiro AGACHADO na linha central da rede -->
+        <rect x="91" y="147" width="18" height="12" rx="3" fill="#C49A2A" stroke="white" stroke-width="1.5"/>
+        <text x="100" y="157" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="white" font-weight="700">P</text>
+        <!-- arrow left/right -->
+        <text x="55" y="158" font-family="Barlow Condensed,sans-serif" font-size="10" fill="#C49A2A" font-weight="700">←→ decide</text>
+        <!-- adversários -->
+        <circle cx="85" cy="45" r="9" fill="#1A2B3C" stroke="white" stroke-width="1.5"/>
+        <text x="85" y="49" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="white" font-weight="700">D</text>
+        <circle cx="55" cy="117" r="9" fill="#1A2B3C" stroke="white" stroke-width="1.5"/>
+        <text x="55" y="121" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="white" font-weight="700">P</text>
+        <text x="100" y="275" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="rgba(255,255,255,.5)">EQUIPE QUE SACA ↓</text>
+        <text x="100" y="18" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="9" fill="rgba(255,255,255,.5)">EQUIPE QUE DEVOLVE ↑</text>
+      </svg>
+      <p>Parceiro fica <strong>agachado na linha central</strong> da rede. O sacador fica no centro. Após o saque, o parceiro corta para um lado — o devolvedor tem 50/50 de chance de errar direto nele. Requer sinal combinado.</p>
+    </div>
+  </div>
+
+  <div class="alert">
+    <strong>Quando usar cada formação?</strong><br>
+    <strong>Padrão:</strong> sempre — é o default. &nbsp;|&nbsp;
+    <strong>Australiana:</strong> adversário devolve muito bem no cruzado. &nbsp;|&nbsp;
+    <strong>Formação I:</strong> para desestabilizar em pontos importantes — use com sinal (palma aberta = direita, punho = esquerda).
+  </div>
+
+  <h2 class="sub">Posicionamento na rede — os erros mais comuns</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Erro Clássico #1</div>
+      <h3>Ficar colado à paralela</h3>
+      <p>O jogador de rede fica próximo à paralela, abrindo todo o centro. Correto: posição na metade entre o centro e a paralela. O centro é mais importante que a paralela.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Erro Clássico #2</div>
+      <h3>Zona de ninguém — linha de serviço</h3>
+      <p>Parar na linha de serviço é a pior posição possível em duplas. O voleio baixo nessa posição é extremamente difícil. Ou vá para a rede (3–4 m) ou fique no fundo.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Erro Clássico #3</div>
+      <h3>Recuar após lob sofrido</h3>
+      <p>Quando levam um lob, muitos abandonam a rede completamente. O correto: quem foi lobado recua para buscar o smash; o parceiro se reposiciona — mas a dupla tenta voltar à rede logo em seguida.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TÁTICAS ============ -->
+<div id="taticas" class="section">
+  <div class="sec-head">
+    <h2>Táticas para vencer mais</h2>
+    <p>Estratégias comprovadas pelos principais sites de coaching dos EUA e Europa.</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Tática #1 — Clássica</div>
+      <h3>"Down the middle solves the riddle"</h3>
+      <p>Bola pelo centro cria dúvida na dupla adversária — quem pega? Especialmente eficaz quando os dois adversários estão na rede. A bola no meio é o menor risco e o maior dividendo tático.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Tática #2 — Net Pressure</div>
+      <h3>Controle a rede, controle o ponto</h3>
+      <p>Toda tática em duplas converge para este princípio: dominar a rede. A dupla que sobe junto e mantém boa posição na rede vence ~72 % dos pontos disputados nessa posição.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Tática #3 — Nos pés</div>
+      <h3>Ataque sempre nos pés do adversário</h3>
+      <p>O voleio baixo (abaixo do nível da rede) é o mais difícil em duplas. Direcione volei, devolução e passing shot sempre nos pés de quem está na rede — forçará o erro ou a bola fraca.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Tática #4 — Poach</div>
+      <h3>Poach com inteligência</h3>
+      <p>Poachar (cruzar na frente do parceiro para interceptar) pressiona o adversário em cada rally. Momento certo: quando o adversário está fora de equilíbrio, correndo, ou devolvendo previsível. Sinal ao parceiro antes!</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Tática #5 — Lob estratégico</div>
+      <h3>Use o lob para recuperar posição</h3>
+      <p>Quando sua dupla está atrás e sob pressão, o lob profundo empurra os adversários para o fundo e dá tempo para avançar à rede. Na devolução, o lob de backhand cruzado é arma sub-utilizada pelo amador.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Tática #6 — Alvo fraco</div>
+      <h3>Identifique e explore o elo fraco</h3>
+      <p>No início do jogo, teste os dois adversários: backhand, devolução, voleio. Identifique o mais fraco e direcione sistematicamente. Não mude sem motivo — explorar o fraco é estratégia, não falta de elegância.</p>
+    </div>
+  </div>
+
+  <h2 class="sub">Comunicação — o diferencial da dupla amadora</h2>
+  <div class="alert">
+    <strong>Regra de ouro:</strong> a dupla que comunica antes de cada ponto vence mais. Combine sinais simples: "poach", "minha" (bola no meio), "tua", "fica" (fique na posição). Não espere o ponto começar para decidir — combine antes.
+  </div>
+
+  <h2 class="sub">Estratégia por situação</h2>
+  <ol class="prio-list">
+    <li class="prio-item">
+      <div class="prio-num">⚡</div>
+      <div class="prio-body">
+        <h4>Sacando no 2.º set com vantagem</h4>
+        <p>Mantenha padrão — não arrisque. Saque seguro + parceiro na rede + primeiro voleio profundo. Preserve a vantagem com consistência, não com winners.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">🔄</div>
+      <div class="prio-body">
+        <h4>Devolvendo e sendo pressionados</h4>
+        <p>Mude a formação — tente a australiana ou o lob de devolução. Quebre o padrão do adversário. Uma mudança tática inesperada desestabiliza mesmo saques fortes.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">🎯</div>
+      <div class="prio-body">
+        <h4>Pontos decisivos (break point / set point)</h4>
+        <p>Simplifique. No ponto mais importante, execute o que você sabe fazer melhor — não teste táticas novas. Erro não forçado no ponto decisivo é o maior desperdício.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">🌀</div>
+      <div class="prio-body">
+        <h4>Adversários que lobam muito</h4>
+        <p>Posicione-se 50 cm mais atrás do habitual na rede. Mantenha smash dominante. Lobs passam por cima? Quem está mais atrás recupera e o parceiro cobre o ângulo.</p>
+      </div>
+    </li>
+  </ol>
+
+  <div class="sources">
+    <h4>Fontes consultadas</h4>
+    <a href="https://www.usta.com/en/home/improve/tips-and-instruction.html" target="_blank">USTA — Tips & Instruction (doubles strategy, Australian formation)</a>
+    <a href="https://thetennistribe.com/tennis-doubles-strategy/" target="_blank">The Tennis Tribe — 12 Doubles Strategies</a>
+    <a href="https://www.tennisnation.com/free-lessons/strategy/tennis-doubles-strategy-positioning/" target="_blank">TennisNation — Data-Driven Doubles Positioning Guide</a>
+    <a href="https://thechamplair.com/tennis/doubles-strategy/" target="_blank">TheChamplair — 18 Doubles Strategies (2026)</a>
+    <a href="https://tenniscreative.com/doubles-tennis-strategy/" target="_blank">Tennis Creative — Complete Doubles Tactics Guide</a>
+    <a href="https://tennislifemag.com/the-australian-formation-how-to-make-it-and-break-it/" target="_blank">Tennis Life Mag — Australian Formation</a>
+    <a href="https://en.wikipedia.org/wiki/I-formation_(tennis)" target="_blank">Wikipedia — I-Formation (tennis)</a>
+    <a href="https://www.redalyc.org/journal/7757/775784517002/html/" target="_blank">Redalyc — Doubles tactical evolution over 20 years (ITF research)</a>
+    <a href="https://aceify.me/the-ace/doubles-tennis-formations-i-formation-australian/" target="_blank">Aceify — Doubles Formations: I-Formation & Australian</a>
+    <a href="https://joinstriveon.com/blog/tennis-doubles-strategy" target="_blank">Striveon — Tennis Doubles Strategy: Win More as a Team</a>
+  </div>
+</div>
+
+<!-- ============ ERROS COMUNS ============ -->
+<div id="erros" class="section">
+  <div class="sec-head">
+    <h2>Erros mais comuns do amador</h2>
+    <p>Os 15 erros que mais custam pontos — e como corrigi-los imediatamente.</p>
+  </div>
+
+  <div class="alert clay">
+    <strong>Por que identificar erros?</strong><br>
+    No tênis amador, eliminar erros vale muito mais do que tentar fazer winners. Estudos da USTA mostram que mais de 60 % dos pontos são perdidos por erro não forçado — não ganhos pelo adversário.
+  </div>
+
+  <h2 class="sub">Erros de Posicionamento</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Erro #1 — Posição</div>
+      <h3>Ficar na zona de ninguém</h3>
+      <p>Parar na linha de serviço é o erro mais comum e mais caro. Nessa posição, você recebe o voleio abaixo da rede com frequência, sem ângulo de ataque. Regra: ou vá à rede (3–4 m) ou fique no fundo. Nunca fique no meio.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Erro #2 — Posição</div>
+      <h3>Parceiro cola na paralela</h3>
+      <p>O jogador de rede fica muito próximo da linha lateral, abrindo todo o corredor central. O centro do campo deve ser sua prioridade — não a paralela. Posicione-se no meio entre o centro e a lateral, levemente para o meio.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Erro #3 — Posição</div>
+      <h3>Dupla não se move em sincronia</h3>
+      <p>Quando um jogador vai à rede, o parceiro deve subir junto. Quando um recua para buscar um lob, o parceiro se ajusta. Duplas que se movem de forma independente abrem buracos exploráveis no campo.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Erro #4 — Posição</div>
+      <h3>Abandonar a rede após um lob</h3>
+      <p>Sofreu um lob? Muitas duplas recuam completamente e perdem a vantagem de rede conquistada. O correto: quem foi lobado busca a bola, o parceiro cobre — mas a dupla deve retornar à rede assim que possível.</p>
+    </div>
+  </div>
+
+  <h2 class="sub">Erros de Execução de Golpes</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Erro #5 — Golpe</div>
+      <h3>Devolução previsível — sempre cruzada</h3>
+      <p>60 % dos amadores devolvem sistematicamente no cruzado. Parceiros de rede experientes exploram isso poachando. Varie: cruzada funda, paralela, lob. A imprevisibilidade na devolução vale tanto quanto a qualidade do golpe.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Erro #6 — Golpe</div>
+      <h3>Tentar winner no 1.º voleio</h3>
+      <p>O primeiro voleio raramente é a hora do winner. A função dele é chegar à rede em boa posição com a bola profunda. Amadores que tentam encerrar o ponto no primeiro voleio erram mais e ficam fora de posição.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Erro #7 — Golpe</div>
+      <h3>Smash defensivo — esperar a bola cair</h3>
+      <p>Recuar demais esperando o lob cair transforma o smash em golpe fraco e sem ângulo. Avance para o smash sempre que possível — bola acima da cabeça em movimento é muito mais eficaz do que em posição estática recuada.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Erro #8 — Golpe</div>
+      <h3>Erro duplo em momentos decisivos</h3>
+      <p>O erro duplo é presente grátis ao adversário. Amadores arriscam o saque em pontos decisivos quando deveriam fazer o oposto: no break point ou set point, simplifique o saque — coloque em jogo com controle, não com potência.</p>
+    </div>
+  </div>
+
+  <h2 class="sub">Erros Táticos e de Comunicação</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Erro #9 — Tático</div>
+      <h3>Não explorar o elo fraco</h3>
+      <p>Muitas duplas distribuem os golpes igualmente entre os dois adversários por "educação". Identificar e explorar o jogador mais fraco (backhand, devolução, rede) é tática legítima e fundamental para vencer.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Erro #10 — Tático</div>
+      <h3>Ignorar o parceiro na rede</h3>
+      <p>O jogador de fundo que não olha para o parceiro perde informação valiosa. O parceiro de rede vê o campo inteiro e pode gesticular para onde direcionar. Não se comunica? A dupla perde metade da vantagem tática.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Erro #11 — Comunicação</div>
+      <h3>Nenhum sinal antes do ponto</h3>
+      <p>Começar o ponto sem combinar nada com o parceiro é jogar individualmente. Antes de cada saque: combine se vai poachar, qual lado na formação I, se vai subir. 5 segundos de comunicação valem mais do que qualquer técnica.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Erro #12 — Comunicação</div>
+      <h3>"Minha!" — nunca dito em tempo</h3>
+      <p>A bola no meio cria hesitação. Sem comunicação, dois jogadores param esperando o outro agir — ou os dois vão e colidem. Estabeleça a regra: bola no meio é do jogador de fundo (forehand), a menos que o de rede grite "minha!"</p>
+    </div>
+  </div>
+
+  <h2 class="sub">Erros Mentais e de Gestão de Jogo</h2>
+  <ol class="prio-list">
+    <li class="prio-item">
+      <div class="prio-num">13</div>
+      <div class="prio-body">
+        <h4>Mudar o que funciona</h4>
+        <p>Vencendo o game com o saque no corpo? Amadores tendem a variar sem necessidade. Se a estratégia está funcionando, mantenha-a. Mude apenas quando o adversário se adaptar — não antes.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">14</div>
+      <div class="prio-body">
+        <h4>Tentar o mesmo passe que já errou três vezes</h4>
+        <p>Bater na paralela contra o parceiro de rede bem posicionado depois de já ter errado duas vezes é teimosia, não estratégia. Troque para o lob ou para a bola nos pés. O erro repetido sinaliza que a tática precisa mudar.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">15</div>
+      <div class="prio-body">
+        <h4>Desistir da rede após um ponto perdido</h4>
+        <p>Perder um ponto na rede não significa que subir foi errado — significa que aconteceu uma vez. Amadores que evitam a rede após um erro estão tomando decisões emocionais. A estatística favorece quem controla a rede: volte sempre.</p>
+      </div>
+    </li>
+  </ol>
+
+  <div class="alert">
+    <strong>Resumo rápido para o próximo jogo:</strong><br>
+    1. Nunca pare na linha de serviço &nbsp;|&nbsp; 2. Varie a devolução &nbsp;|&nbsp; 3. Combine com o parceiro antes de cada ponto &nbsp;|&nbsp; 4. Bola no meio = comunique &nbsp;|&nbsp; 5. Primeiro voleio profundo, não winner &nbsp;|&nbsp; 6. Explore o mais fraco sem hesitar.
+  </div>
+
+  <div class="sources">
+    <h4>Fontes</h4>
+    <a href="https://thetennistribe.com/net-positioning-mistakes/" target="_blank">The Tennis Tribe — 3 Common Net Positioning Mistakes in Doubles</a>
+    <a href="https://thetennistribe.com/tennis-doubles-strategy/" target="_blank">The Tennis Tribe — 12 Doubles Strategies</a>
+    <a href="https://www.tennisnation.com/free-lessons/strategy/tennis-doubles-strategy-positioning/" target="_blank">TennisNation — Data-Driven Doubles Strategy</a>
+    <a href="https://thechamplair.com/tennis/doubles-strategy/" target="_blank">TheChamplair — 18 Doubles Strategies</a>
+    <a href="https://www.accio.com/biz-sportshealth/how-to-train-for-recreational-tennis-doubles-in-2026-the-net-positioning-poach-timing-drill" target="_blank">Accio Sports — Recreational Doubles Net Positioning Drill (2026)</a>
+    <a href="https://www.usta.com/en/home/improve/tips-and-instruction.html" target="_blank">USTA — Tips & Instruction</a>
+  </div>
+</div>
+
+<!-- ============ +50 ANOS ============ -->
+<div id="mais50" class="section">
+  <div class="sec-head">
+    <h2>Duplas acima dos 50 anos</h2>
+    <p>Adaptar o jogo à realidade física e tática da maturidade — jogar mais inteligente, não mais forte.</p>
+  </div>
+
+  <div class="alert clay">
+    <strong>A vantagem real do jogador experiente:</strong><br>
+    Acima dos 50 anos, experiência tática e eficiência de movimentação valem muito mais do que velocidade ou potência. Jogadores maduros erram menos, leem o jogo melhor e tomam decisões mais rápidas — o que, em duplas amador, é frequentemente decisivo.
+  </div>
+
+  <h2 class="sub">Adapte o corpo — proteja a energia</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Físico</div>
+      <h3>Posição na rede como prioridade absoluta</h3>
+      <p>Subir à rede reduz a distância que você precisa correr. Ao controlar a rede, você encurta o campo e encerra pontos em 2–3 jogadas — poupando energia que seria gasta em rallys longos no fundo.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Físico</div>
+      <h3>Movimentação lateral: antecipe, não corra</h3>
+      <p>Velocidade de reação supera velocidade de pernas acima dos 50. Leia a posição do adversário e mova-se antes da pancada. Um passo adiantado na direção certa vale três passos reativos após a bola partir.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Físico</div>
+      <h3>Smash: prefira o pulo curto ao recuo</h3>
+      <p>Recuar correndo para trás aumenta o risco de queda e lesão. Para lobs médios, prefira o smash em movimento lateral ou com pequeno salto. Para lobs muito profundos, deixe quicar e use o drive ou lob de devolução.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Físico</div>
+      <h3>Aquecimento longo, recuperação ativa</h3>
+      <p>Músculos acima dos 50 precisam de mais tempo para atingir temperatura ideal. 15–20 minutos de aquecimento progressivo (mobilidade, mini-tênis, volei a volei) reduz lesões e melhora o desempenho desde o 1.° game.</p>
+    </div>
+  </div>
+
+  <h2 class="sub">Jogue mais inteligente — táticas para a maturidade</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Tático</div>
+      <h3>Consistência é sua principal arma</h3>
+      <p>No tênis amador acima dos 50, o jogador mais consistente quase sempre vence. Adversários se frustram com quem devolve tudo. Abra mão de winners arriscados — coloque a bola no jogo com profundidade e dê ao adversário a chance de errar.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Tático</div>
+      <h3>Lob como golpe primário, não emergencial</h3>
+      <p>O lob ofensivo é subutilizado por jogadores maduros. Adversários na rede são vulneráveis — use o lob como primeiro recurso contra duplas que sobem rápido, não só quando está em dificuldade. Um lob profundo bom vale mais do que um passing shot arriscado.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Tático</div>
+      <h3>Saque a 70–75% — mais pontos, menos desgaste</h3>
+      <p>Sacar com 100% de força pode render um ou dois aces, mas aumenta erros duplos e desgasta o ombro ao longo do jogo. Um saque consistente a 70–75% de potência, bem direcionado (corpo / T / wide), rende mais do que tentar o saque matador.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Tático</div>
+      <h3>Dirija o jogo para pontos curtos</h3>
+      <p>Rallys longos de fundo de quadra desgastam mais o jogador mais velho. Estratégia: saque + subida, devolução + aproximação, dropshot ocasional. Feche os pontos em 3–4 jogadas — use a rede como atalho, não como destino final de um rally longo.</p>
+    </div>
+  </div>
+
+  <h2 class="sub">O parceiro certo — como escolher e jogar junto</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Dupla</div>
+      <h3>Complementaridade física e tática</h3>
+      <p>Duplas ideais se complementam: um jogador mais de rede + um de fundo consistente; um com bom saque + outro com boa devolução. Dois jogadores com os mesmos pontos fracos se expõem juntos. Converse com o parceiro sobre papéis antes do jogo.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Dupla</div>
+      <h3>Comunicação positiva entre os pontos</h3>
+      <p>Acima dos 50, o aspecto mental pesa mais. Uma palavra de encorajamento entre os pontos ("boa pressão", "temos isso") mantém o parceiro focado e a dupla coesa. Críticas desgastam — combinações e ajustes táticos constroem.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Dupla</div>
+      <h3>Defina quem cobre o meio antes de jogar</h3>
+      <p>Bola no meio é o maior ponto de atrito em duplas maduras. Combine antes: "no meio, a bola é do seu forehand" ou "quem estiver mais perto grita minha". Uma regra clara evita hesitação e colisões.</p>
+    </div>
+  </div>
+
+  <h2 class="sub">Competição oficial — onde jogar acima dos 50</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>EUA — USTA</div>
+      <h3>NTRP Senior Leagues & National Championships</h3>
+      <p>A USTA oferece competições por faixa etária: 55+, 60+, 65+ e 70+ nos campeonatos nacionais NTRP. As ligas regionais têm divisões sênior em praticamente todo estado. Nível: 2.5 a 5.0 NTRP — há espaço para todos os níveis.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Europa — Tennis Europe</div>
+      <h3>ITF Super-Seniors & Tennis Europe Seniors</h3>
+      <p>O ITF organiza os Super-Seniors (35+, 40+, 45+, 50+, até 85+) com torneios em toda a Europa. Tennis Europe tem calendário próprio de seniors com eventos em saibro na Espanha, França, Itália e Alemanha durante todo o ano.</p>
+    </div>
+  </div>
+
+  <div class="alert">
+    <strong>Resumo prático para o próximo jogo:</strong><br>
+    Suba à rede cedo — encurta pontos e poupa energia &nbsp;|&nbsp; Use o lob como ataque, não só como defesa &nbsp;|&nbsp; Saque consistente a 75 % de força &nbsp;|&nbsp; Aquecimento completo antes do 1.° game &nbsp;|&nbsp; Combine papéis com o parceiro &nbsp;|&nbsp; Consistência vence potência no nível amador acima dos 50.
+  </div>
+
+  <div class="sources">
+    <h4>Fontes</h4>
+    <a href="https://www.usta.com/en/home/play/adult-tennis/programs/national/ntrp.html" target="_blank">USTA — NTRP National Championships (55+, 60+, 65+, 70+)</a>
+    <a href="https://www.usta.com/en/home/improve/tips-and-instruction.html" target="_blank">USTA — Tips & Instruction for Adult Players</a>
+    <a href="https://thechamplair.com/tennis/doubles-strategy/" target="_blank">TheChamplair — 18 Doubles Strategies including Senior Adaptations</a>
+    <a href="https://tenniscreative.com/doubles-tennis-strategy/" target="_blank">Tennis Creative — Doubles Strategy Complete Guide</a>
+    <a href="https://joinstriveon.com/blog/tennis-doubles-strategy" target="_blank">Striveon — Tennis Doubles Strategy: Win More as a Team</a>
+    <a href="https://bayviewvillagetenniscamp.com/how-to-play-doubles-tennis-strategy-guide/" target="_blank">Bayview Village Tennis Camp — How to Play Doubles</a>
+  </div>
+</div>
+
+<!-- ============ TREINOS ============ -->
+<div id="treinos" class="section">
+  <div class="sec-head">
+    <h2>Exercícios e treinos para duplas</h2>
+    <p>Drills específicos para duplas amadores — do aquecimento à simulação de jogo.</p>
+  </div>
+
+  <div class="alert clay">
+    <strong>Princípio geral:</strong><br>
+    Treinar duplas é diferente de treinar singles. Os drills devem simular as situações reais: saque + parceiro na rede, devolução + subida, poach, lob e cobertura. Treinar posicionamento e tomada de decisão é tão importante quanto treinar o golpe em si.
+  </div>
+
+  <!-- BLOCO DE DRILL -->
+  <h2 class="sub">Aquecimento específico para duplas (15 min)</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Drill 1 · 5 min</div>
+      <h3>Mini-tênis cooperativo</h3>
+      <p>Dois jogadores dentro da área de serviço (ou quadra de duplas reduzida) — bate e volta cooperativo, sem ponto. Foco: toque suave, controle de profundidade, posicionamento de pés. Acima dos 50, comece com bola lenta por 2–3 min antes de acelerar.</p>
+      <p style="margin-top:8px; font-size:12px; color:var(--text-3);">Variação: 4 jogadores nas 4 posições de duplas, touch volei cruzado.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Drill 2 · 5 min</div>
+      <h3>Volei a volei — cruzado e paralelo</h3>
+      <p>Dois jogadores nas posições de rede (cada um no seu lado), fazendo volei a volei. Série 1: cruzado. Série 2: paralelo. Série 3: livre. Foco: posição de espera (raquete na frente), bloquear sem bater, manter posição.</p>
+      <p style="margin-top:8px; font-size:12px; color:var(--text-3);">Objetivo: 20 voleios seguidos sem errar antes de avançar para o próximo drill.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Drill 3 · 5 min</div>
+      <h3>Saque-devolução informal</h3>
+      <p>Um saca, um devolve, sem jogo de ponto. O sacador foca em direção (corpo / T / wide), o devolvedor foca em profundidade e variação (cruzado, paralelo, lob). Ideal para aquecer os dois principais golpes do jogo de duplas.</p>
+      <p style="margin-top:8px; font-size:12px; color:var(--text-3);">5 saques cada, 3 direções diferentes.</p>
+    </div>
+  </div>
+
+  <h2 class="sub">Drills de posicionamento e movimento</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Drill · Posição</div>
+      <h3>Sombra de movimentação — dupla sincronizada</h3>
+      <p>Sem bola. Os dois parceiros se movem juntos pela quadra em resposta a comandos ("rede", "fundo", "direita"). O objetivo é desenvolver o reflexo de mover-se em sincronia. Executar por 3–4 min.</p>
+      <p style="margin-top:8px; font-size:12px; color:var(--text-3);">Variação: um lidera o movimento, o outro segue espelhando.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Drill · Cobertura</div>
+      <h3>Lob e cobertura — alternância de papéis</h3>
+      <p>Dupla A na rede. Dupla B alimenta lobs de diferentes profundidades. Dupla A pratica: quem vai buscar o lob (jogador lobado recua) e como o parceiro se reposiciona. Revezar após 10 lobs. Foco: comunicação "minha!", cobertura automática do parceiro.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Drill · Rede</div>
+      <h3>Net positioning + poach timing</h3>
+      <p>Um jogador alimenta bolas cruzadas. O parceiro de rede pratica o timing do poach: sair quando a bola passa pela rede no retorno do adversário. Começa com o alimentador avisando quando vai poachar, depois vai sem aviso. 15–20 repetições cada lado.</p>
+      <p style="margin-top:8px; font-size:12px; color:var(--text-3);">Fonte: Accio Sports Drill (2026) — recomendado para recreativos.</p>
+    </div>
+  </div>
+
+  <h2 class="sub">Drills de situação de jogo</h2>
+  <ol class="prio-list">
+    <li class="prio-item">
+      <div class="prio-num">A</div>
+      <div class="prio-body">
+        <h4>Saque + 1 — toda a equipe sobe</h4>
+        <p>Sacador saca e sobe à rede junto com o parceiro. Regra: o ponto só vale se a dupla sacadora estiver na rede ao 2.° golpe. Objetivo: criar o reflexo de subir após o saque. Joga sets de 4 games com essa regra. O erro é ficar no fundo após sacar.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">B</div>
+      <div class="prio-body">
+        <h4>Devolução + aproximação</h4>
+        <p>A dupla devolvendo pratica: devolver cruzado profundo e subir. A dupla sacando defende. Joga-se apenas os pontos de devolução — 3 games seguidos de devolução antes de trocar. Foco: devolução que permita a subida, não o winner na devolução.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">C</div>
+      <div class="prio-body">
+        <h4>Formação Australiana — game completo</h4>
+        <p>A dupla sacadora usa sempre a formação australiana. A devolvendo precisa se adaptar. Jogar 2 games nessa formação — ambas as duplas vivenciam a situação. Discutir após: o que funcionou? Onde a devolução foi mais eficaz?</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">D</div>
+      <div class="prio-body">
+        <h4>Ponto a partir de bola curta — rede forçada</h4>
+        <p>O professor ou parceiro alimenta uma bola curta próxima ao meio da quadra. O jogador executa a aproximação e sobe — o parceiro acompanha. Joga-se o ponto a partir daí. Foco: transição fundo-rede, primeiro voleio de aproximação profundo.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">E</div>
+      <div class="prio-body">
+        <h4>Tie-break com regra de penalidade</h4>
+        <p>Joga-se um tie-break normal, mas qualquer erro duplo vale 2 pontos para o adversário e qualquer winner de rede vale 2 pontos para quem fez. Regra simples que muda completamente as prioridades táticas do treino — simula pressão real.</p>
+      </div>
+    </li>
+  </ol>
+
+  <h2 class="sub">Plano de treino semanal — amador 2× por semana</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Sessão 1 · Técnica</div>
+      <h3>Foco em golpes-chave (60–75 min)</h3>
+      <ul class="check-list" style="margin:0">
+        <li>15 min — aquecimento (mini-tênis + volei a volei)</li>
+        <li>15 min — saque + devolução (drill informal, direções)</li>
+        <li>15 min — volei de aproximação + 1.° voleio</li>
+        <li>10 min — lob e cobertura (drill de posicionamento)</li>
+        <li>15 min — jogo de ponto com regra (saque + subida)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Sessão 2 · Jogo</div>
+      <h3>Simulação tática (60–75 min)</h3>
+      <ul class="check-list" style="margin:0">
+        <li>15 min — aquecimento completo</li>
+        <li>10 min — drill de poach + timing de rede</li>
+        <li>10 min — formação australiana ou I (combinações)</li>
+        <li>40 min — jogo de sets com regra tática definida antes</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert">
+    <strong>Para jogadores acima de 50:</strong><br>
+    Reduza o volume de drills de alta intensidade e aumente a ênfase em posicionamento e tomada de decisão. Um drill de 10 min bem focado vale mais do que 30 min de bola jogada aleatoriamente. Intervalo ativo entre series: caminhe, não pare.
+  </div>
+
+  <div class="sources">
+    <h4>Fontes</h4>
+    <a href="https://www.accio.com/biz-sportshealth/how-to-train-for-recreational-tennis-doubles-in-2026-the-net-positioning-poach-timing-drill" target="_blank">Accio Sports — Net Positioning + Poach Timing Drill (2026)</a>
+    <a href="https://www.usta.com/en/home/improve/tips-and-instruction.html" target="_blank">USTA — Tips & Instruction (Doubles Drills)</a>
+    <a href="https://thetennistribe.com/tennis-doubles-strategy/" target="_blank">The Tennis Tribe — Doubles Strategy & Drills</a>
+    <a href="https://www.tennisnation.com/free-lessons/strategy/tennis-doubles-strategy-positioning/" target="_blank">TennisNation — Doubles Positioning Guide</a>
+    <a href="https://tenniscreative.com/doubles-tennis-strategy/" target="_blank">Tennis Creative — Complete Doubles Guide</a>
+    <a href="https://bayviewvillagetenniscamp.com/how-to-play-doubles-tennis-strategy-guide/" target="_blank">Bayview Village Tennis Camp — Doubles Practice Guide</a>
+  </div>
+</div>
+
+<!-- ============ AQUECIMENTO ============ -->
+<div id="aquecimento" class="section">
+  <div class="sec-head">
+    <h2>Aquecimento físico pré-jogo</h2>
+    <p>Protocolo completo de 25–30 minutos — corpo pronto desde o primeiro game, lesões prevenidas.</p>
+  </div>
+
+  <div class="alert clay">
+    <strong>Por que o aquecimento é mais crítico acima dos 50:</strong><br>
+    Músculos mais velhos levam mais tempo para atingir temperatura ideal e têm menor tolerância ao esforço súbito. Um aquecimento bem feito reduz em até 50 % o risco de distensões, lesões no ombro e problemas no joelho — e melhora o desempenho desde o 1.° game, não só a partir do 3.°.
+  </div>
+
+  <!-- TIMELINE VISUAL -->
+  <h2 class="sub">Protocolo completo — 25 a 30 minutos</h2>
+
+  <ol class="prio-list">
+    <li class="prio-item">
+      <div class="prio-num" style="color:var(--green);font-size:15px;padding-top:4px;min-width:48px">0–5<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">min</span></div>
+      <div class="prio-body">
+        <h4>Ativação cardiovascular leve</h4>
+        <p>Caminhada rápida ao redor da quadra (2 voltas), depois trote leve por 2–3 min. Objetivo: elevar a frequência cardíaca gradualmente e aumentar a circulação nos membros inferiores. Nunca pule essa etapa — é a base de todo o restante.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num" style="color:var(--green);font-size:15px;padding-top:4px;min-width:48px">5–10<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">min</span></div>
+      <div class="prio-body">
+        <h4>Mobilidade articular dinâmica</h4>
+        <p>Movimentos controlados e progressivos — não estáticos. Sequência recomendada: rotação de tornozelo (10× cada), joelhos em círculo (10×), quadril em círculo (10×), rotação de ombros para frente e para trás (15×), rotação de pescoço lenta (5× cada lado), rotação de punho (10×). Execute devagar, sem forçar amplitude.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num" style="color:var(--clay);font-size:15px;padding-top:4px;min-width:48px">10–15<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">min</span></div>
+      <div class="prio-body">
+        <h4>Ativação muscular específica para tênis</h4>
+        <p>Deslocamentos laterais (shuffles) — 4 séries de 5 m para cada lado. Passos cruzados (crossover steps) — 3 séries. Agachamento parcial com rotação de tronco — 10 repetições. Lunges (afundo) com rotação — 8 cada lado. Esses movimentos ativam os grupos musculares usados nas duplas: quadríceps, glúteos, panturrilha e rotadores do quadril.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num" style="color:var(--clay);font-size:15px;padding-top:4px;min-width:48px">15–18<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">min</span></div>
+      <div class="prio-body">
+        <h4>Ativação do ombro e braço (essencial acima dos 50)</h4>
+        <p>Pendulum — braço solto pendulando para frente, para trás e em círculo (30 seg cada direção). Rotação interna e externa com elástico leve ou com o próprio peso (15× cada). Elevação lateral do braço até a horizontal (15×). Cross-body stretch — puxar o braço pela frente do peito (20 seg cada). Esses exercícios preparam o manguito rotador e previnem a lesão de ombro mais comum no tênis amador.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num" style="color:var(--gold);font-size:15px;padding-top:4px;min-width:48px">18–22<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">min</span></div>
+      <div class="prio-body">
+        <h4>Mini-tênis e volei a volei na quadra</h4>
+        <p>Dentro da área de serviço: 3 min de mini-tênis cooperativo a ritmo baixo. Depois 2 min de volei a volei (cruzado). Foco: toque da bola, não potência. Essa etapa transfere o aquecimento físico para o movimento específico do tênis — conexão olho-mão, timing de raquete, posição de espera.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num" style="color:var(--gold);font-size:15px;padding-top:4px;min-width:48px">22–28<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">min</span></div>
+      <div class="prio-body">
+        <h4>Aquecimento progressivo de golpes</h4>
+        <p>Fundo de quadra a fundo: rally cooperativo de groundstrokes (2 min). Subida à rede: 4–5 bolas de aproximação + voleio + smash. Saque informal: 6–8 saques por lado, começando a 50 % de força e aumentando até 80 %. Devolução: 6–8 devoluções por lado. Ao final dessa etapa, o corpo está pronto para jogar no nível máximo desde o primeiro game.</p>
+      </div>
+    </li>
+  </ol>
+
+  <h2 class="sub">Exercícios de mobilidade — detalhamento</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Membros inferiores</div>
+      <h3>Joelhos e quadril — prioridade</h3>
+      <ul class="check-list" style="margin:0">
+        <li>Rotação de tornozelo: 10× cada, apoiado na grade</li>
+        <li>Elevação do joelho ao peito: 10× cada lado</li>
+        <li>Círculo com o quadril: 10× cada direção</li>
+        <li>Deslocamento lateral (shuffle): 3 × 5 metros</li>
+        <li>Agachamento parcial (até 90°): 2 × 10</li>
+        <li>Lunge com rotação: 8× cada lado</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Tronco e coluna</div>
+      <h3>Rotação e flexibilidade de tronco</h3>
+      <ul class="check-list" style="margin:0">
+        <li>Rotação de tronco em pé (braços abertos): 15× cada lado</li>
+        <li>Inclinação lateral suave: 10× cada lado</li>
+        <li>Cat-cow em pé (flexão / extensão de coluna): 10×</li>
+        <li>Rotação com raquete à altura do ombro: 15× cada lado</li>
+        <li>Torção de quadril deitado (se tiver espaço): 30 seg cada</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Ombro e braço</div>
+      <h3>Manguito rotador — prevenção de lesão</h3>
+      <ul class="check-list" style="margin:0">
+        <li>Pendulum solto: 30 seg cada direção</li>
+        <li>Rotação interna/externa com elástico: 15×</li>
+        <li>Elevação lateral até horizontal: 15×</li>
+        <li>Cross-body stretch: 20 seg cada braço</li>
+        <li>Rotação de punho: 10× cada direção</li>
+        <li>Imitação do gesto do saque sem bola: 10×</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="sub">O que NÃO fazer no aquecimento</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Evitar</div>
+      <h3>Alongamento estático antes do jogo</h3>
+      <p>Segurar um alongamento por 30–60 segundos antes da atividade reduz temporariamente a força muscular e o tempo de reação. Alongamento estático é para <em>depois</em> do jogo, não antes. Antes: mobilidade dinâmica.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Evitar</div>
+      <h3>Sacar forte logo no início</h3>
+      <p>Começar o aquecimento já sacando com 100 % de força é a principal causa de lesão de ombro no amador. O ombro precisa de pelo menos 10 minutos de ativação progressiva antes do gesto explosivo do saque.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Evitar</div>
+      <h3>Pular o aquecimento por falta de tempo</h3>
+      <p>10 minutos na quadra sem aquecimento não é treino — é risco. Se o tempo for curto, reduza para o protocolo mínimo (5 min mobilidade + 5 min mini-tênis) em vez de pular. O 1.° game do jogo nunca deve ser o seu aquecimento.</p>
+    </div>
+  </div>
+
+  <h2 class="sub">Protocolo mínimo — quando o tempo é curto (10 min)</h2>
+  <div class="alert">
+    <strong>Versão express para dias com pouco tempo:</strong><br>
+    <strong>2 min</strong> — caminhada rápida + trote leve ao redor da quadra &nbsp;|&nbsp;
+    <strong>2 min</strong> — mobilidade dinâmica: ombros, quadril, tornozelos (rápido, sem parar) &nbsp;|&nbsp;
+    <strong>2 min</strong> — deslocamentos laterais + agachamentos parciais &nbsp;|&nbsp;
+    <strong>2 min</strong> — mini-tênis cooperativo dentro da área de serviço &nbsp;|&nbsp;
+    <strong>2 min</strong> — 4 saques por lado a 60–70 % + 4 devoluções. Pronto para jogar.
+  </div>
+
+  <div class="sources">
+    <h4>Fontes</h4>
+    <a href="https://www.usta.com/en/home/improve/tips-and-instruction.html" target="_blank">USTA — Tips & Instruction (warm-up protocols)</a>
+    <a href="https://hillcresttenniscamp.com/how-to-reduce-double-faults-on-your-serve/" target="_blank">Hillcrest Tennis Camp — Shoulder warm-up and serve preparation</a>
+    <a href="https://www.accio.com/biz-sportshealth/how-to-train-for-recreational-tennis-doubles-in-2026-the-net-positioning-poach-timing-drill" target="_blank">Accio Sports — Recreational Tennis Training (2026)</a>
+    <a href="https://bayviewvillagetenniscamp.com/how-to-play-doubles-tennis-strategy-guide/" target="_blank">Bayview Village Tennis Camp — Pre-match preparation</a>
+    <a href="https://thetennistribe.com/tennis-doubles-strategy/" target="_blank">The Tennis Tribe — Doubles warm-up recommendations</a>
+  </div>
+</div>
+
+<!-- ============ RECUPERAÇÃO ============ -->
+<div id="recuperacao" class="section">
+  <div class="sec-head">
+    <h2>Recuperação e alongamento pós-jogo</h2>
+    <p>Protocolo de 20–25 minutos para reduzir dores, acelerar a recuperação e jogar melhor no próximo dia.</p>
+  </div>
+
+  <div class="alert clay">
+    <strong>Por que a recuperação é mais importante acima dos 50:</strong><br>
+    O corpo maduro demora mais para eliminar o ácido lático e reparar microlesões musculares. Sem recuperação ativa, a fadiga acumula de jogo em jogo — aumentando o risco de lesões por sobrecarga. Uma rotina de 20 min após o jogo pode reduzir a dor muscular do dia seguinte em até 40 %.
+  </div>
+
+  <h2 class="sub">Protocolo completo — 20 a 25 minutos</h2>
+
+  <ol class="prio-list">
+    <li class="prio-item">
+      <div class="prio-num" style="color:var(--green);font-size:15px;padding-top:4px;min-width:48px">0–5<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">min</span></div>
+      <div class="prio-body">
+        <h4>Desaceleração ativa — não pare de repente</h4>
+        <p>Terminou o jogo? Não sente imediatamente. Caminhe em ritmo moderado ao redor da quadra por 3–5 minutos. Isso permite que a frequência cardíaca baixe gradualmente, evita tontura e ajuda o sangue acumulado nas pernas a retornar à circulação central. Nunca pule essa etapa — é o sinal para o corpo iniciar a recuperação.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num" style="color:var(--green);font-size:15px;padding-top:4px;min-width:48px">5–8<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">min</span></div>
+      <div class="prio-body">
+        <h4>Hidratação e reposição de eletrólitos</h4>
+        <p>Nos primeiros 15 minutos após o esforço, o corpo absorve nutrientes com mais eficiência. Beba 400–600 ml de água com uma pitada de sal ou isotônico diluído. Evite bebidas geladas imediatamente após o esforço — temperatura fria contrai os vasos sanguíneos quando o músculo ainda precisa de circulação ativa. Se o jogo durou mais de 90 min, inclua uma fonte leve de carboidrato (banana, bolacha de arroz).</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num" style="color:var(--clay);font-size:15px;padding-top:4px;min-width:48px">8–16<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">min</span></div>
+      <div class="prio-body">
+        <h4>Alongamento estático — membros inferiores</h4>
+        <p>Agora sim — é o momento correto para o alongamento estático. Mantenha cada posição por 25–35 segundos, sem balançar. Respire fundo durante o alongamento — a expiração aprofunda a amplitude naturalmente. Sequência: panturrilha (de pé, apoiado na grade), isquiotibiais (inclinação à frente com joelho semiflexionado), quadríceps (em pé, segurando o tornozelo), glúteo / piriforme (deitado, perna cruzada sobre o joelho), flexor do quadril / psoas (lunge baixo, joelho no chão).</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num" style="color:var(--clay);font-size:15px;padding-top:4px;min-width:48px">16–20<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">min</span></div>
+      <div class="prio-body">
+        <h4>Alongamento estático — tronco, ombro e braço</h4>
+        <p>Ombro cruzado (cross-body): puxe o braço pela frente do peito, 30 seg cada. Tríceps: braço dobrado atrás da cabeça, empurre o cotovelo para baixo, 25 seg cada. Rotação de tronco sentado: pernas estendidas, gire o tronco com o braço de apoio, 30 seg cada lado. Extensão de coluna (cat-cow lento): 5 ciclos respiratórios. Abertura de peito: mãos entrelaçadas atrás, ombros para trás, 20 seg. Pescoço: inclinação lateral suave, 20 seg cada lado — sem forçar.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num" style="color:var(--gold);font-size:15px;padding-top:4px;min-width:48px">20–25<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">min</span></div>
+      <div class="prio-body">
+        <h4>Gelo ou contraste térmico (opcional mas recomendado)</h4>
+        <p>Joelhos ou ombro doloridos? Gelo por 10–15 min na região imediatamente após o jogo reduz inflamação aguda. Para recuperação geral dos membros inferiores: banho com contraste (1 min água fria → 2 min morna → 1 min fria, 3 ciclos) acelera a remoção de ácido lático. Não aplique calor em regiões com dor aguda nas primeiras 24 horas — calor em fase inflamatória piora o edema.</p>
+      </div>
+    </li>
+  </ol>
+
+  <h2 class="sub">Alongamentos essenciais — guia visual</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Panturrilha e tornozelo</div>
+      <h3>Gastrocnêmio + sóleo</h3>
+      <p><strong>Como fazer:</strong> apoie as mãos na grade ou parede. Perna de trás estendida — sente a tensão no gastrocnêmio (parte superior da panturrilha). Para o sóleo: dobre levemente o joelho da perna traseira — foca na parte inferior. <strong>Tempo:</strong> 30 seg cada posição, cada perna. <strong>Por quê:</strong> a panturrilha é o músculo mais sobrecarregado nos deslocamentos laterais das duplas.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Isquiotibiais</div>
+      <h3>Parte posterior da coxa</h3>
+      <p><strong>Como fazer:</strong> em pé, apoie o calcanhar numa superfície baixa (banco ou borda da quadra) com joelho semiflexionado. Incline levemente o tronco para frente mantendo a coluna neutra. <strong>Tempo:</strong> 30 seg cada perna. <strong>Por quê:</strong> isquiotibiais encurtados são a principal causa de dor lombar no tennista — e se agravam com a idade.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Quadríceps e flexor do quadril</div>
+      <h3>Frente da coxa + psoas</h3>
+      <p><strong>Como fazer:</strong> em pé, segure o tornozelo e puxe o calcanhar ao glúteo (quadríceps). Para o psoas: lunge baixo com joelho no chão, quadril empurrado para frente. <strong>Tempo:</strong> 25–30 seg cada. <strong>Por quê:</strong> psoas tenso compromete o passo e sobrecarrega a coluna lombar — muito comum em quem fica muito tempo sentado.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Glúteo e piriforme</div>
+      <h3>Região do glúteo profundo</h3>
+      <p><strong>Como fazer:</strong> deitado de costas, cruze uma perna sobre o joelho da outra (figura de "4"). Puxe a perna de baixo em direção ao peito. <strong>Tempo:</strong> 35 seg cada lado. <strong>Por quê:</strong> o piriforme tenso comprime o nervo ciático — causa da dor irradiada na parte posterior da coxa comum em amadores acima dos 50.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Ombro — cross-body</div>
+      <h3>Cápsula posterior do ombro</h3>
+      <p><strong>Como fazer:</strong> puxe um braço estendido pela frente do peito com o outro braço, à altura do ombro. Mantenha o ombro para baixo — não eleve. <strong>Tempo:</strong> 30 seg cada braço. <strong>Por quê:</strong> a cápsula posterior do ombro se encurta com os movimentos repetitivos do tênis, limitando a rotação interna e aumentando o risco de impingimento.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Tronco e coluna</div>
+      <h3>Rotação torácica + extensão lombar</h3>
+      <p><strong>Como fazer:</strong> sentado com as pernas estendidas, gire o tronco e apoie o braço oposto atrás do quadril. Para a lombar: deitado, puxe ambos os joelhos ao peito por 20 seg. <strong>Tempo:</strong> 30 seg cada lado na rotação. <strong>Por quê:</strong> o jogo de duplas exige rotação constante de tronco — liberar essa tensão previne dores lombares no dia seguinte.</p>
+    </div>
+  </div>
+
+  <h2 class="sub">Recuperação nas horas seguintes ao jogo</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span">Nutrição</div>
+      <h3>Janela de recuperação — 30 a 45 min após</h3>
+      <p>A combinação proteína + carboidrato nessa janela acelera a recuperação muscular. Exemplos práticos: iogurte com fruta, queijo branco com mel, ovo com torrada, shake de proteína com banana. Não precisa ser elaborado — o objetivo é fornecer aminoácidos para reparar o músculo e glicose para repor o glicogênio.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Sono</div>
+      <h3>Sono é o melhor recuperador</h3>
+      <p>A maior parte da reparação muscular ocorre durante o sono profundo, quando o organismo libera hormônio do crescimento. Acima dos 50, a qualidade do sono é mais importante do que qualquer suplemento. 7–8 horas, com regularidade de horário, supera qualquer protocolo de recuperação ativa.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span">Intervalo</div>
+      <h3>Tempo mínimo entre jogos</h3>
+      <p>Para jogadores acima de 50 jogando em nível recreativo: mínimo 48 horas entre partidas intensas. Jogar dois dias seguidos é possível se o 1.° jogo foi leve — mas jogos consecutivos sem recuperação adequada aumentam muito o risco de lesões por sobrecarga (tendinopatias, distensões).</p>
+    </div>
+  </div>
+
+  <div class="alert">
+    <strong>Protocolo mínimo pós-jogo para dias com pressa (8 min):</strong><br>
+    <strong>2 min</strong> — caminhada de desaceleração &nbsp;|&nbsp;
+    <strong>30 seg</strong> — panturrilha cada lado &nbsp;|&nbsp;
+    <strong>30 seg</strong> — isquiotibial cada lado &nbsp;|&nbsp;
+    <strong>30 seg</strong> — quadríceps cada lado &nbsp;|&nbsp;
+    <strong>30 seg</strong> — glúteo / piriforme cada lado &nbsp;|&nbsp;
+    <strong>30 seg</strong> — ombro cross-body cada lado &nbsp;|&nbsp;
+    <strong>1 min</strong> — rotação de tronco + extensão lombar. Hidrate durante todo o processo.
+  </div>
+
+  <div class="sources">
+    <h4>Fontes</h4>
+    <a href="https://www.usta.com/en/home/improve/tips-and-instruction.html" target="_blank">USTA — Recovery protocols for adult players</a>
+    <a href="https://hillcresttenniscamp.com/how-to-reduce-double-faults-on-your-serve/" target="_blank">Hillcrest Tennis Camp — Shoulder care and post-match recovery</a>
+    <a href="https://www.accio.com/biz-sportshealth/how-to-train-for-recreational-tennis-doubles-in-2026-the-net-positioning-poach-timing-drill" target="_blank">Accio Sports — Recreational Tennis Health (2026)</a>
+    <a href="https://bayviewvillagetenniscamp.com/how-to-play-doubles-tennis-strategy-guide/" target="_blank">Bayview Village Tennis Camp — Player health and recovery</a>
+    <a href="https://medium.com/the-sports-scientist/a-deeper-dive-into-second-serve-statistics-adddb8567124" target="_blank">The Sports Scientist — Tennis physiology and performance</a>
+  </div>
+</div>
+
+<!-- ============ LESÕES ============ -->
+<div id="lesoes" class="section">
+  <div class="sec-head">
+    <h2>Lesões comuns e prevenção</h2>
+    <p>As lesões mais frequentes no tennista amador acima dos 50 — sinais de alerta, causas e como evitá-las.</p>
+  </div>
+
+  <div class="alert clay">
+    <strong>Regra fundamental:</strong><br>
+    Dor aguda durante o jogo é sinal de parada imediata — não de "passar com o movimento". Jogar com dor aguda transforma uma lesão pequena em uma grande. Dor muscular difusa no dia seguinte (DOMS) é normal; dor articular ou tendinosa persistente não é.
+  </div>
+
+  <!-- LESÕES EM CARDS COM SEVERIDADE -->
+  <h2 class="sub">Lesões musculares e tendíneas</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Muito Comum · Cotovelo</div>
+      <h3>Epicondilite lateral <span class="badge">Cotovelo do Tennista</span></h3>
+      <p><strong>O que é:</strong> inflamação dos tendões extensores do antebraço na inserção do epicôndilo lateral. Dor na parte externa do cotovelo, que piora ao segurar objetos ou ao bater a bola. <strong>Causa no amador:</strong> backhand com punho frouxo, grip muito apertado, excesso de topspin ou raquete pesada demais. <strong>Prevenção:</strong> backhand com suporte do antebraço inteiro (não só do punho), grip correto (teste do dedo: deve deslizar entre a palma e o cabo), alongamento diário do extensor, fortalecimento excêntrico do antebraço.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Comum · Ombro</div>
+      <h3>Síndrome do impingimento <span class="badge green">Ombro</span></h3>
+      <p><strong>O que é:</strong> compressão dos tendões do manguito rotador sob o arco acromial. Dor ao elevar o braço acima da cabeça — especialmente no saque e na smash. <strong>Causa no amador:</strong> mecânica de saque deficiente (cotovelo baixo), falta de aquecimento, musculatura rotadora fraca. <strong>Prevenção:</strong> aquecimento obrigatório com pendulum e rotação de manguito antes de sacar, exercícios de fortalecimento do manguito rotador 2× por semana, mecânica de saque com cotovelo alto.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Comum · Panturrilha</div>
+      <h3>Distensão da panturrilha <span class="badge">Músculo do Tênis</span></h3>
+      <p><strong>O que é:</strong> rotura parcial do gastrocnêmio medial — chamada "tênis leg". Dor súbita e intensa na parte posterior da perna durante um sprint ou deslocamento lateral. Frequente em jogadores acima dos 40. <strong>Causa:</strong> aquecimento insuficiente, desaceleração brusca, músculo frio. <strong>Prevenção:</strong> aquecimento obrigatório da panturrilha, nunca correr a fundo no 1.° game, fortalecimento excêntrico (elevação de calcanhar em declive).</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Comum · Joelho</div>
+      <h3>Tendinopatia patelar <span class="badge green">Joelho do Saltador</span></h3>
+      <p><strong>O que é:</strong> degeneração do tendão patelar por sobrecarga repetitiva. Dor abaixo da patela, que piora ao descer escadas ou ao agachar. <strong>Causa no amador:</strong> excesso de volume de treino sem recuperação, superfície dura (hard court), musculatura de quadríceps fraca. <strong>Prevenção:</strong> fortalecimento excêntrico do quadríceps (agachamento unilateral lento), intervalo adequado entre jogos, palmilha de suporte se necessário.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Moderado · Tornozelo</div>
+      <h3>Entorse de tornozelo lateral</h3>
+      <p><strong>O que é:</strong> distensão dos ligamentos laterais por inversão do pé — o mais comum de todos os traumas no tênis. <strong>Causa no amador:</strong> deslocamentos rápidos em superfície irregular, calçado inadequado, musculatura de tornozelo fraca. <strong>Prevenção:</strong> tênis com bom suporte lateral, exercícios de equilíbrio unipodal (prancha de equilíbrio), nunca jogar com tornozelo dolorido do jogo anterior.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Moderado · Costas</div>
+      <h3>Dor lombar — sobrecarga e rotação</h3>
+      <p><strong>O que é:</strong> tensão dos músculos paravertebrais e/ou compressão discal pela rotação repetitiva do tronco. <strong>Causa no amador:</strong> mecânica de saque com hiperextensão lombar, isquiotibiais encurtados, falta de rotação torácica. <strong>Prevenção:</strong> alongamento diário de isquiotibiais e psoas, fortalecimento do core (prancha), mecânica de saque com rotação torácica (não lombar), não jogar com dor lombar aguda.</p>
+    </div>
+  </div>
+
+  <h2 class="sub">Lesões por esforço repetitivo — específicas do +50</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Tendão de Aquiles</div>
+      <h3>Tendinopatia do Aquiles</h3>
+      <p><strong>Sinal de alerta:</strong> dor e rigidez no tendão de Aquiles (acima do calcanhar) principalmente de manhã ou nos primeiros passos após repouso. Piora progressiva se ignorada — pode evoluir para rotura. <strong>Prevenção:</strong> fortalecimento excêntrico da panturrilha (calcanhar em declive), tênis com bom amortecimento no calcanhar, evitar aumentar volume de jogo abruptamente.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Fascite Plantar</div>
+      <h3>Fasciite plantar</h3>
+      <p><strong>Sinal de alerta:</strong> dor aguda na sola do pé (principalmente no calcanhar) ao dar os primeiros passos pela manhã. Piora ao passar longo tempo em pé. <strong>Prevenção:</strong> rolar a sola do pé sobre uma garrafa gelada por 5 min após o jogo, alongamento do flexor plantar, palmilha de suporte de arco, tênis com boa amortização. Muito comum em quem joga no hard court.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Ombro</div>
+      <h3>Ruptura parcial do manguito rotador</h3>
+      <p><strong>Sinal de alerta:</strong> dor persistente no ombro ao elevar o braço, dor noturna ao deitar sobre o ombro afetado, fraqueza progressiva no saque. Diferente do impingimento — é uma lesão estrutural. <strong>Prevenção:</strong> fortalecimento do manguito 2× por semana (rotação interna/externa com elástico), nunca sacar sem aquecimento, reduzir volume de saques se sentir dor. Lesão que exige avaliação médica — não ignore.</p>
+    </div>
+  </div>
+
+  <!-- TABELA DE DECISÃO: JOGAR OU NÃO? -->
+  <h2 class="sub">Devo jogar? — Guia de decisão rápida</h2>
+  <div class="card-grid">
+    <div class="card" style="border-top: 3px solid var(--green);">
+      <div class="card-icon green"><span class="dot"></span>Pode jogar</div>
+      <h3>Sinais de que está seguro</h3>
+      <ul class="check-list" style="margin:0">
+        <li>Dor muscular difusa leve — o DOMS normal do dia seguinte</li>
+        <li>Rigidez matinal que melhora com o aquecimento</li>
+        <li>Cansaço geral sem dor localizada</li>
+        <li>Dor que some completamente após 5–10 min de aquecimento</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--gold);">
+      <div class="card-icon" style="color:var(--gold)"><span class="dot" style="background:var(--gold)"></span>Jogar com cautela</div>
+      <h3>Monitore e reduza intensidade</h3>
+      <ul class="check-list" style="margin:0">
+        <li>Dor leve que piora levemente com o esforço mas não incapacita</li>
+        <li>Tensão no tendão de Aquiles ou joelho que já durou 2+ dias</li>
+        <li>Tornozelo com leve edema mas sem limitação de movimento</li>
+        <li>Dor lombar leve — jogue se tolerar, evite saques a 100 %</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top: 3px solid #B03A2E;">
+      <div class="card-icon" style="color:#B03A2E"><span class="dot" style="background:#B03A2E"></span>Não jogue — descanse</div>
+      <h3>Sinais para parar imediatamente</h3>
+      <ul class="check-list" style="margin:0">
+        <li>Dor aguda durante o movimento — qualquer localização</li>
+        <li>Edema articular visível (joelho, tornozelo, cotovelo)</li>
+        <li>Dor que não melhora nada após 10 min de aquecimento</li>
+        <li>Dor noturna espontânea que interrompe o sono</li>
+        <li>Sensação de "estralo" ou crepitação durante o jogo</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="sub">Prevenção contínua — hábitos semanais</h2>
+  <ol class="prio-list">
+    <li class="prio-item">
+      <div class="prio-num">1</div>
+      <div class="prio-body">
+        <h4>Fortalecimento do manguito rotador — 2× por semana</h4>
+        <p>3 séries de 15 repetições de rotação interna e externa com elástico leve. Não precisa de academia — um elástico de resistência baixa preso na porta resolve. O manguito forte é a principal defesa contra lesões de ombro no tennista.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">2</div>
+      <div class="prio-body">
+        <h4>Fortalecimento excêntrico de panturrilha — 3× por semana</h4>
+        <p>Elevação de calcanhar em declive (em uma degrau, desça lentamente): 3 séries de 12 repetições, unilateral. Previne tanto a "tênis leg" (rotura do gastrocnêmio) quanto a tendinopatia do Aquiles — as duas lesões de perna mais comuns no amador acima dos 50.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">3</div>
+      <div class="prio-body">
+        <h4>Core estável — prancha 3× por semana</h4>
+        <p>Prancha frontal 3 × 30–45 seg + prancha lateral 3 × 20–30 seg cada lado. Core forte protege a lombar dos impactos da rotação do saque e dos deslocamentos bruscos. Não exige equipamento — 5 min por sessão são suficientes.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">4</div>
+      <div class="prio-body">
+        <h4>Equilíbrio e propriocepção — diariamente</h4>
+        <p>Fique em um pé só por 30–60 seg enquanto escova os dentes. Simples, eficaz e sem tempo extra. A propriocepção do tornozelo deteriora com a idade — mantê-la ativa reduz drasticamente o risco de entorses.</p>
+      </div>
+    </li>
+    <li class="prio-item">
+      <div class="prio-num">5</div>
+      <div class="prio-body">
+        <h4>Troque o tênis a cada 60–80 horas de jogo</h4>
+        <p>O amortecimento do tênis se degrada antes da sola se desgastar visualmente. Um tênis "morto" transfere impacto excessivo para joelhos, quadril e coluna. Marque as horas de uso — acima dos 50, esse cuidado simples previne muito mais lesão do que qualquer suplemento.</p>
+      </div>
+    </li>
+  </ol>
+
+  <div class="alert">
+    <strong>Quando procurar um médico:</strong><br>
+    Dor articular ou tendinosa que persiste por mais de 7–10 dias sem melhora, edema que não cede com gelo, dor noturna, formigamento ou fraqueza muscular progressiva. Fisioterapeuta esportivo é o especialista mais indicado para o tennista — avaliação precoce evita que lesões pequenas se tornem crônicas.
+  </div>
+
+  <div class="sources">
+    <h4>Fontes</h4>
+    <a href="https://www.usta.com/en/home/improve/tips-and-instruction.html" target="_blank">USTA — Injury prevention for adult tennis players</a>
+    <a href="https://hillcresttenniscamp.com/how-to-reduce-double-faults-on-your-serve/" target="_blank">Hillcrest Tennis Camp — Shoulder mechanics and injury prevention</a>
+    <a href="https://www.accio.com/biz-sportshealth/how-to-train-for-recreational-tennis-doubles-in-2026-the-net-positioning-poach-timing-drill" target="_blank">Accio Sports Health — Recreational Tennis Injury Prevention (2026)</a>
+    <a href="https://bayviewvillagetenniscamp.com/how-to-play-doubles-tennis-strategy-guide/" target="_blank">Bayview Village Tennis Camp — Physical preparation and injury care</a>
+    <a href="https://medium.com/the-sports-scientist/a-deeper-dive-into-second-serve-statistics-adddb8567124" target="_blank">The Sports Scientist — Tennis physiology and musculoskeletal health</a>
+  </div>
+</div>
+
+<!-- ============ NUTRIÇÃO ============ -->
+<div id="nutricao" class="section">
+  <div class="sec-head">
+    <h2>Nutrição e hidratação</h2>
+    <p>O que comer e beber — antes, durante e depois do jogo — para render mais e recuperar melhor.</p>
+  </div>
+
+  <div class="alert clay">
+    <strong>Nutrição para o amador acima dos 50 tem prioridades específicas:</strong><br>
+    Após os 50 anos, a síntese proteica reduz e a absorção de certos nutrientes diminui. Proteína adequada, hidratação rigorosa e controle do horário das refeições fazem mais diferença no desempenho e na recuperação do que qualquer suplemento.
+  </div>
+
+  <!-- TILES NUMÉRICOS -->
+  <div class="stat-grid">
+    <div class="stat-tile">
+      <div class="stat-num">500</div>
+      <div class="stat-label">ml de água 2h antes do jogo — hidratação prévia essencial</div>
+      <div class="stat-source">USTA Sports Science</div>
+    </div>
+    <div class="stat-tile green">
+      <div class="stat-num">150</div>
+      <div class="stat-label">ml a cada 15–20 min durante o jogo — não espere a sede</div>
+      <div class="stat-source">ITF Nutrition Guidelines</div>
+    </div>
+    <div class="stat-tile gold">
+      <div class="stat-num">1,5 g</div>
+      <div class="stat-label">de proteína por kg de peso corporal/dia para +50 — acima da média adulta</div>
+      <div class="stat-source">Sports Medicine Research</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-num">2–3h</div>
+      <div class="stat-label">antes do jogo — janela ideal para a refeição pré-partida</div>
+      <div class="stat-source">USTA Performance Nutrition</div>
+    </div>
+    <div class="stat-tile green">
+      <div class="stat-num">45 min</div>
+      <div class="stat-label">janela de ouro pós-jogo — absorção máxima de proteína e carboidrato</div>
+      <div class="stat-source">Exercise Science Consensus</div>
+    </div>
+    <div class="stat-tile gold">
+      <div class="stat-num">2%</div>
+      <div class="stat-label">de desidratação já reduz força muscular e concentração perceptivelmente</div>
+      <div class="stat-source">ACSM Guidelines</div>
+    </div>
+  </div>
+
+  <!-- ANTES DO JOGO -->
+  <h2 class="sub">Antes do jogo — combustível certo na hora certa</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>2–3 horas antes</div>
+      <h3>Refeição principal pré-jogo</h3>
+      <p>Priorize carboidratos de digestão moderada + proteína leve. Evite gorduras em excesso e fibras em grande quantidade — retardam o esvaziamento gástrico e podem causar desconforto no jogo.</p>
+      <p style="margin-top:10px; font-size:13px; color:var(--text-2)"><strong>Exemplos práticos:</strong> arroz + frango grelhado + salada leve · macarrão com atum · pão integral com ovo mexido e fruta · aveia com banana e proteína.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>30–60 min antes</div>
+      <h3>Snack pré-jogo (se necessário)</h3>
+      <p>Se o jogo for mais de 3h após a última refeição, um snack leve com carboidrato rápido evita a queda de glicose no meio do jogo. Fácil de digerir, sem gordura e sem excesso de fibra.</p>
+      <p style="margin-top:10px; font-size:13px; color:var(--text-2)"><strong>Exemplos:</strong> banana · tâmaras · torrada com mel · bolacha de arroz com geleia · barra de cereal simples (sem chocolate).</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>O que evitar antes</div>
+      <h3>Alimentos que prejudicam o desempenho</h3>
+      <p>Fritura, carne gordurosa, feijão, brócolis, repolho e outros alimentos flatulentos nas 3h antes do jogo. Café em excesso (diurético + ansiedade). Bebida alcoólica na véspera — piora hidratação e recuperação muscular mesmo em pequenas quantidades.</p>
+    </div>
+  </div>
+
+  <!-- HIDRATAÇÃO DETALHADA -->
+  <h2 class="sub">Hidratação — o fator mais subestimado acima dos 50</h2>
+  <div class="alert">
+    <strong>Por que o +50 se desidrata mais rápido:</strong><br>
+    Com o envelhecimento, o mecanismo de sede fica menos sensível — você pode estar 2 % desidratado sem sentir sede. Isso piora coordenação, tempo de reação e resistência muscular antes mesmo de perceber. Beba por horário, não por sede.
+  </div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Pré-jogo</div>
+      <h3>Carregamento hídrico</h3>
+      <ul class="check-list" style="margin:0">
+        <li>Na véspera: urina deve ser amarelo-claro — sinal de boa hidratação</li>
+        <li>Manhã do jogo: 400–500 ml ao acordar</li>
+        <li>2h antes: mais 400–500 ml de água</li>
+        <li>15 min antes: 150–200 ml (não exagere para não encher)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Durante o jogo</div>
+      <h3>Protocolo durante o jogo</h3>
+      <ul class="check-list" style="margin:0">
+        <li>150–200 ml a cada troca de lado (a cada 2 games)</li>
+        <li>Jogo > 60 min: isotônico diluído (50 % água + 50 % isotônico)</li>
+        <li>Calor intenso: adicione uma pitada de sal à garrafa d'água</li>
+        <li>Não espere sair do jogo com sede — é tarde demais</li>
+        <li>Água em temperatura ambiente: absorção mais rápida que gelada</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon green"><span class="dot"></span>Pós-jogo</div>
+      <h3>Reidratação eficiente</h3>
+      <ul class="check-list" style="margin:0">
+        <li>500–700 ml nas primeiras 2h após o jogo</li>
+        <li>Para cada 1 kg perdido: repor 1,5 L de líquido</li>
+        <li>Eletrólitos: água de coco, isotônico ou água com sal + limão</li>
+        <li>Evite álcool — interfere na reidratação e na recuperação muscular</li>
+        <li>Urina clara = reidratado. Urina escura = beba mais</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- DURANTE O JOGO -->
+  <h2 class="sub">Durante o jogo — energia em partidas longas</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Jogo até 60 min</div>
+      <h3>Só hidratação é suficiente</h3>
+      <p>Para partidas curtas (1 set ou menos de 60 min), água é suficiente. O glicogênio muscular armazenado suporta esse esforço sem necessidade de reposição calórica durante o jogo.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Jogo 60–90 min</div>
+      <h3>Snack leve no intervalo</h3>
+      <p>Na troca entre sets, um snack rápido mantém a glicemia estável e evita a queda de rendimento no 3.° set. <strong>Opções ideais:</strong> banana (30 seg para comer), tâmaras (2–3 unidades), gel de carboidrato, isotônico com carboidrato.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Jogo acima de 90 min</div>
+      <h3>Reposição de carboidrato a cada hora</h3>
+      <p>Em partidas longas (torneios, jogos de 3 sets), consuma 30–45 g de carboidrato por hora de jogo. A queda de glicose piora a tomada de decisão tática antes de afetar a força — você começa a errar escolhas antes de sentir cansaço físico.</p>
+    </div>
+  </div>
+
+  <!-- PÓS JOGO -->
+  <h2 class="sub">Pós-jogo — janela de ouro (30–45 min)</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Proteína</div>
+      <h3>20–30 g de proteína — prioridade #1</h3>
+      <p>A proteína consumida nos 45 min após o exercício é utilizada preferencialmente para reparo muscular. Para o +50, essa janela é ainda mais importante — a síntese proteica é menos eficiente e precisa de estímulo adequado. <strong>Fontes rápidas:</strong> iogurte grego (15–17 g/pot), frango desfiado, ovo, whey protein, queijo cottage.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Carboidrato</div>
+      <h3>Repor glicogênio — mesma janela</h3>
+      <p>Combine proteína com carboidrato moderado na refeição de recuperação. Proporção ideal: 3:1 carboidrato/proteína em volume. <strong>Refeições completas:</strong> arroz + frango + legumes · massa com atum + salada · batata-doce + ovo + legumes · sanduíche integral com proteína.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Micronutrientes</div>
+      <h3>O que o +50 precisa com mais atenção</h3>
+      <p><strong>Vitamina D:</strong> fundamental para saúde óssea e muscular — deficiência comum em quem joga em quadra coberta. <strong>Magnésio:</strong> reduz cãibras e melhora o sono. <strong>Ômega-3:</strong> anti-inflamatório natural — salmão, sardinha, linhaça. <strong>Cálcio:</strong> proteção óssea. Avalie com médico se necessita suplementação.</p>
+    </div>
+  </div>
+
+  <!-- CÃIBRAS -->
+  <h2 class="sub">Cãibras durante o jogo — causas e prevenção</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Causa #1</div>
+      <h3>Desidratação e perda de sódio</h3>
+      <p>A principal causa de cãibra em jogadores amadores não é falta de potássio (o mito da banana) — é perda de sódio pelo suor combinada com desidratação. Solução: adicione uma pitada de sal à garrafa durante jogos longos no calor, ou use isotônico diluído a partir do 2.° set.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>Causa #2</div>
+      <h3>Fadiga muscular por volume excessivo</h3>
+      <p>Cãibras no final do jogo frequentemente indicam sobrecarga muscular — não deficiência nutricional. Prevenção: condicionamento físico regular fora da quadra (ciclismo, natação, caminhada), fortalecimento excêntrico da panturrilha e respeito ao intervalo entre jogos.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon"><span class="dot"></span>No momento da cãibra</div>
+      <h3>O que fazer quando acontece</h3>
+      <p>Pare imediatamente — forçar o músculo em cãibra pode causar rotura. Alongue suavemente o músculo afetado (dorsiflexão do pé para cãibra na panturrilha). Beba isotônico ou água com sal. Massagem leve no local por 30–60 seg. Volte ao jogo apenas quando a dor ceder completamente.</p>
+    </div>
+  </div>
+
+  <div class="alert">
+    <strong>Cardápio-modelo no dia de jogo:</strong><br>
+    <strong>Café da manhã (3h antes):</strong> aveia com banana + 2 ovos + café com leite &nbsp;|&nbsp;
+    <strong>Snack (30 min antes):</strong> 1 banana ou tâmaras &nbsp;|&nbsp;
+    <strong>Durante:</strong> 150 ml a cada 2 games + banana no intervalo &nbsp;|&nbsp;
+    <strong>Pós-jogo (até 45 min):</strong> iogurte grego com fruta ou shake proteico + fruta &nbsp;|&nbsp;
+    <strong>Refeição principal:</strong> arroz + proteína + legumes + salada.
+  </div>
+
+  <div class="sources">
+    <h4>Fontes</h4>
+    <a href="https://www.usta.com/en/home/improve/tips-and-instruction.html" target="_blank">USTA — Sports nutrition guidelines for adult players</a>
+    <a href="https://www.accio.com/biz-sportshealth/how-to-train-for-recreational-tennis-doubles-in-2026-the-net-positioning-poach-timing-drill" target="_blank">Accio Sports Health — Recreational Tennis Nutrition (2026)</a>
+    <a href="https://hillcresttenniscamp.com/how-to-reduce-double-faults-on-your-serve/" target="_blank">Hillcrest Tennis Camp — Player health, hydration and performance</a>
+    <a href="https://bayviewvillagetenniscamp.com/how-to-play-doubles-tennis-strategy-guide/" target="_blank">Bayview Village Tennis Camp — Nutrition for competitive doubles</a>
+    <a href="https://medium.com/the-sports-scientist/a-deeper-dive-into-second-serve-statistics-adddb8567124" target="_blank">The Sports Scientist — Exercise physiology and tennis performance</a>
+  </div>
+</div>
+
+<!-- ============ CENÁRIOS ============ -->
+<div id="cenarios" class="section">
+  <div class="sec-head">
+    <h2>Cenários de jogo</h2>
+    <p>Para cada situação — o que fazer e o que evitar. Decisões prontas para aplicar imediatamente.</p>
+  </div>
+
+  <div class="alert clay">
+    <strong>Como usar esta seção:</strong><br>
+    Cada cenário descreve uma situação concreta de jogo de duplas. As colunas mostram as ações recomendadas (✓) e os erros a evitar (✕). Leia antes do jogo — no calor da partida, decisões já treinadas mentalmente saem de forma automática.
+  </div>
+
+  <h2 class="sub">Situações de saque</h2>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <span class="scenario-num">Cenário 01</span>
+      <span class="scenario-title">Você está sacando — adversário devolve muito no cruzado</span>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-col do-col">
+        <div class="scenario-col-head do">✓ Faça isso</div>
+        <ul>
+          <li>Mude para formação australiana — parceiro do mesmo lado do sacador</li>
+          <li>Saque no corpo do devolvedor, forçando-o a improvisar</li>
+          <li>Parceiro de rede poach no 1.° retorno cruzado</li>
+          <li>Combine sinal com o parceiro antes de cada ponto</li>
+        </ul>
+      </div>
+      <div class="scenario-col dont-col">
+        <div class="scenario-col-head dont">✕ Evite isso</div>
+        <ul>
+          <li>Manter formação padrão sem ajuste — o adversário continuará explorado</li>
+          <li>Parceiro de rede ficar parado sem tentar o poach</li>
+          <li>Sacar sempre no mesmo local sem variar direção</li>
+          <li>Ignorar que o padrão está sendo explorado</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <span class="scenario-num">Cenário 02</span>
+      <span class="scenario-title">Você está sacando — adversário loba o parceiro de rede repetidamente</span>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-col do-col">
+        <div class="scenario-col-head do">✓ Faça isso</div>
+        <ul>
+          <li>Parceiro recua 40–50 cm da posição habitual na rede</li>
+          <li>Sacador avança para cobrir a diagonal se o lob for profundo</li>
+          <li>Responda o lob com smash diagonal ou dropshot surpreendente</li>
+          <li>Saque mais agressivo para forçar devolução pressionada</li>
+        </ul>
+      </div>
+      <div class="scenario-col dont-col">
+        <div class="scenario-col-head dont">✕ Evite isso</div>
+        <ul>
+          <li>Parceiro abandonar completamente a rede por medo do lob</li>
+          <li>Smash sempre no mesmo lugar — adversário aprende a cobrir</li>
+          <li>Sacador ficar parado no fundo após o saque</li>
+          <li>Discutir sobre quem deveria ter coberto o lob</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <span class="scenario-num">Cenário 03</span>
+      <span class="scenario-title">Ponto de break contra você — sacando sob pressão</span>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-col do-col">
+        <div class="scenario-col-head do">✓ Faça isso</div>
+        <ul>
+          <li>Saque seguro a 70 % — coloque em jogo, não arrisque o ás</li>
+          <li>Padrão testado: saque no corpo + parceiro estático na rede</li>
+          <li>Respire fundo antes de sacar — reduza o ritmo deliberadamente</li>
+          <li>Execute o que já funcionou no jogo, não inove agora</li>
+        </ul>
+      </div>
+      <div class="scenario-col dont-col">
+        <div class="scenario-col-head dont">✕ Evite isso</div>
+        <ul>
+          <li>Arriscar saque a 100 % tentando ás — erro duplo é catastrófico aqui</li>
+          <li>Mudar formação no ponto mais importante sem combinar antes</li>
+          <li>Sacar rápido sob tensão — precipitação aumenta o erro</li>
+          <li>Pensar no resultado em vez de no próximo golpe</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sub">Situações de devolução</h2>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <span class="scenario-num">Cenário 04</span>
+      <span class="scenario-title">Você está devolvendo — adversário usa formação australiana</span>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-col do-col">
+        <div class="scenario-col-head do">✓ Faça isso</div>
+        <ul>
+          <li>Lob de devolução cruzado — sobre o parceiro de rede agachado</li>
+          <li>Drive pela paralela (mais difícil, mas abre o campo)</li>
+          <li>Devolução nos pés do sacador — forçar voleio baixo</li>
+          <li>Varie entre lob e paralela para criar dúvida</li>
+        </ul>
+      </div>
+      <div class="scenario-col dont-col">
+        <div class="scenario-col-head dont">✕ Evite isso</div>
+        <ul>
+          <li>Devolução cruzada — é exatamente onde o adversário quer que você vá</li>
+          <li>Devolução curta e no meio — parceiro de rede intercepta facilmente</li>
+          <li>Tentar winner arriscado — erro na devolução já é suficiente para perder o ponto</li>
+          <li>Entrar em pânico e mudar o golpe de base que funciona</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <span class="scenario-num">Cenário 05</span>
+      <span class="scenario-title">Você está devolvendo — parceiro de rede adversário poacha com frequência</span>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-col do-col">
+        <div class="scenario-col-head do">✓ Faça isso</div>
+        <ul>
+          <li>Devolução pela paralela ocasionalmente — pune o poach com espaço aberto</li>
+          <li>Lob de devolução alto e profundo sobre o parceiro de rede</li>
+          <li>Devolução nos pés do sacador em vez de cruzada</li>
+          <li>Varie o alvo para tornar o poach mais arriscado para o adversário</li>
+        </ul>
+      </div>
+      <div class="scenario-col dont-col">
+        <div class="scenario-col-head dont">✕ Evite isso</div>
+        <ul>
+          <li>Continuar devolvendo no mesmo lugar de sempre — alimenta o poach</li>
+          <li>Tentar cruzar rápido demais para passar o parceiro — erro fácil</li>
+          <li>Ignorar o parceiro de rede e tratar como devolução de singles</li>
+          <li>Reclamar do poach — é tática legítima; ajuste sua devolução</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <span class="scenario-num">Cenário 06</span>
+      <span class="scenario-title">Você está devolvendo — sacador tem 1.° saque muito forte</span>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-col do-col">
+        <div class="scenario-col-head do">✓ Faça isso</div>
+        <ul>
+          <li>Recue 30–50 cm na devolução — mais tempo para reagir</li>
+          <li>Bloqueie em vez de bater — devolução controlada é melhor que erro</li>
+          <li>Mire nos pés do sacador — dificulta a subida à rede</li>
+          <li>Espere o 2.° saque para atacar — seja paciente no 1.°</li>
+        </ul>
+      </div>
+      <div class="scenario-col dont-col">
+        <div class="scenario-col-head dont">✕ Evite isso</div>
+        <ul>
+          <li>Ficar na mesma posição esperando ser atingido pelo saque</li>
+          <li>Tentar winner na devolução do 1.° saque forte — alto índice de erro</li>
+          <li>Antecipar direção sem base — oscilação entre os lados sem leitura</li>
+          <li>Abandonar a devolução com lob sem ter tentado o drive antes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sub">Situações de rally e rede</h2>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <span class="scenario-num">Cenário 07</span>
+      <span class="scenario-title">Sua dupla está na rede — adversários na rede também (4 na rede)</span>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-col do-col">
+        <div class="scenario-col-head do">✓ Faça isso</div>
+        <ul>
+          <li>Bola pelo meio — "down the middle solves the riddle"</li>
+          <li>Mire nos pés do adversário mais próximo — force o voleio baixo</li>
+          <li>Ângulo agudo abrindo para o lado — se tiver bola acima da rede</li>
+          <li>Dropvolei surpresa — se o adversário recuou um passo</li>
+        </ul>
+      </div>
+      <div class="scenario-col dont-col">
+        <div class="scenario-col-head dont">✕ Evite isso</div>
+        <ul>
+          <li>Bola alta no meio — facilita a smash do adversário</li>
+          <li>Tentar winner difícil na lateral com pouco ângulo — rede ou fora</li>
+          <li>Lob quando ambos estão bem posicionados na rede — tempo para smash</li>
+          <li>Bater forte sem direção definida — velocidade sem alvo é erro grátis</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <span class="scenario-num">Cenário 08</span>
+      <span class="scenario-title">Sua dupla está no fundo — adversários dominam a rede</span>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-col do-col">
+        <div class="scenario-col-head do">✓ Faça isso</div>
+        <ul>
+          <li>Lob profundo e alto — force os adversários para o fundo</li>
+          <li>Bola nos pés de quem está na rede — dificulta o voleio</li>
+          <li>Aguente o rally — adversários na rede erram mais sob pressão contínua</li>
+          <li>Após um lob bom, aproveite para subir à rede junto</li>
+        </ul>
+      </div>
+      <div class="scenario-col dont-col">
+        <div class="scenario-col-head dont">✕ Evite isso</div>
+        <ul>
+          <li>Passing shot alto e lento — facilita voleio ou smash</li>
+          <li>Lob curto — smash fácil para o adversário</li>
+          <li>Ficar no fundo sem plano — postura passiva enquanto adversários avançam</li>
+          <li>Bater forte cruzado direto no corpo do parceiro de rede</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <span class="scenario-num">Cenário 09</span>
+      <span class="scenario-title">Bola curta — oportunidade de aproximação</span>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-col do-col">
+        <div class="scenario-col-head do">✓ Faça isso</div>
+        <ul>
+          <li>Avance decisivamente — hesitar é perder o ângulo de subida</li>
+          <li>Golpe de aproximação profundo e no lado mais fraco do adversário</li>
+          <li>Parceiro sobe junto — ambos à rede ao 1.° voleio</li>
+          <li>1.° voleio: profundo e neutro — não tente o winner ainda</li>
+        </ul>
+      </div>
+      <div class="scenario-col dont-col">
+        <div class="scenario-col-head dont">✕ Evite isso</div>
+        <ul>
+          <li>Tentar o winner na bola curta — fácil de errar com pressão de tempo</li>
+          <li>Subir sozinho enquanto o parceiro fica no fundo</li>
+          <li>1.° voleio no meio da quadra — facilita a passagem do adversário</li>
+          <li>Aproximação diagonal sem profundidade — adversário tem tempo de responder</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sub">Situações de placar e pressão</h2>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <span class="scenario-num">Cenário 10</span>
+      <span class="scenario-title">Vencendo por um set — início do 2.° set</span>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-col do-col">
+        <div class="scenario-col-head do">✓ Faça isso</div>
+        <ul>
+          <li>Mantenha exatamente o padrão que funcionou no 1.° set</li>
+          <li>Comece forte — não deixe adversário ganhar confiança no início</li>
+          <li>Continue explorando o elo fraco identificado no 1.° set</li>
+          <li>Comunique ao parceiro: "mesmo jogo, mesma intensidade"</li>
+        </ul>
+      </div>
+      <div class="scenario-col dont-col">
+        <div class="scenario-col-head dont">✕ Evite isso</div>
+        <ul>
+          <li>Relaxar — o adversário vai jogar melhor, esteja preparado</li>
+          <li>Mudar a estratégia vencedora sem motivo claro</li>
+          <li>Jogar no "piloto automático" sem foco nos primeiros games</li>
+          <li>Começar a calcular o resultado antes de terminar o set</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <span class="scenario-num">Cenário 11</span>
+      <span class="scenario-title">Perdendo por um set — início do 2.° set</span>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-col do-col">
+        <div class="scenario-col-head do">✓ Faça isso</div>
+        <ul>
+          <li>Identifique o que o adversário explorou — corrija um ponto específico</li>
+          <li>Mude uma variável tática (formação, alvo do saque, quem poacha)</li>
+          <li>Reinicie mentalmente — cada set é um novo jogo</li>
+          <li>Comunique com o parceiro: "o que mudamos para o próximo set?"</li>
+        </ul>
+      </div>
+      <div class="scenario-col dont-col">
+        <div class="scenario-col-head dont">✕ Evite isso</div>
+        <ul>
+          <li>Mudar tudo ao mesmo tempo — confunde a dupla e não resolve o problema</li>
+          <li>Culpar o parceiro — destrói a coesão da dupla no momento mais crítico</li>
+          <li>Jogar mais arriscado por desespero — aumenta os erros não forçados</li>
+          <li>Aceitar a derrota mentalmente antes do 2.° set terminar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-head">
+      <span class="scenario-num">Cenário 12</span>
+      <span class="scenario-title">Tie-break — pontos de decisão</span>
+    </div>
+    <div class="scenario-body">
+      <div class="scenario-col do-col">
+        <div class="scenario-col-head do">✓ Faça isso</div>
+        <ul>
+          <li>Simplifique — execute o melhor padrão que a dupla tem</li>
+          <li>Saque seguro a 75–80 % — sem tentar ás desnecessário</li>
+          <li>Devolução profunda e central — não arrisque winner</li>
+          <li>Primeiro a 5 pontos lidera — foque em um ponto de cada vez</li>
+        </ul>
+      </div>
+      <div class="scenario-col dont-col">
+        <div class="scenario-col-head dont">✕ Evite isso</div>
+        <ul>
+          <li>Testar táticas novas no tie-break — hora de executar o que já sabe</li>
+          <li>Perder o 1.° ponto e mudar completamente o jogo</li>
+          <li>Acelerar o ritmo por ansiedade — precipitação gera erro</li>
+          <li>Pensar em "não pode perder" — foque no próximo ponto, não no placar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sources">
+    <h4>Fontes</h4>
+    <a href="https://thetennistribe.com/tennis-doubles-strategy/" target="_blank">The Tennis Tribe — 12 Doubles Strategies</a>
+    <a href="https://thechamplair.com/tennis/doubles-strategy/" target="_blank">TheChamplair — 18 Doubles Strategies (2026)</a>
+    <a href="https://tenniscreative.com/doubles-tennis-strategy/" target="_blank">Tennis Creative — Complete Doubles Tactics Guide</a>
+    <a href="https://www.tennisnation.com/free-lessons/strategy/tennis-doubles-strategy-positioning/" target="_blank">TennisNation — Data-Driven Doubles Strategy</a>
+    <a href="https://joinstriveon.com/blog/tennis-doubles-strategy" target="_blank">Striveon — Tennis Doubles Strategy: Win More as a Team</a>
+    <a href="https://www.usta.com/en/home/improve/tips-and-instruction.html" target="_blank">USTA — Tips & Instruction</a>
+  </div>
+</div>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
