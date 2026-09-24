@@ -1,0 +1,728 @@
+<title>Minhas Aulas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --court:    #2D5A1B;
+  --court-lt: #4A8A2C;
+  --court-xl: #EBF5E3;
+  --amber:    #B45309;
+  --amb-bg:   #FFFBEB;
+  --amb-bd:   #FDE68A;
+  --clay:     #C2502A;
+  --clay-bg:  #FEF2EE;
+  --blue:     #1D4ED8;
+  --blue-bg:  #EFF6FF;
+  --bg:       #F4F7F2;
+  --surf:     #FFFFFF;
+  --text:     #1A2310;
+  --text2:    #3D5228;
+  --text3:    #7A8E6A;
+  --bdr:      #D4E0C8;
+  --div:      #E8F0E2;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --court:    #5A9E3A; --court-lt: #7ABF50; --court-xl: #1A3010;
+  --amber:    #FCD34D; --amb-bg: #201800; --amb-bd: #78540A;
+  --clay:     #F28B72; --clay-bg: #2A0E00;
+  --blue:     #93C5FD; --blue-bg: #080F22;
+  --bg:       #0D1A09; --surf: #152010; --text: #E8F5DF;
+  --text2:    #A8C890; --text3:  #5A7048;
+  --bdr:      #2A3E1E; --div: #1A2A14; color-scheme: dark;
+}}
+:root[data-theme="dark"] {
+  --court:    #5A9E3A; --court-lt: #7ABF50; --court-xl: #1A3010;
+  --amber:    #FCD34D; --amb-bg: #201800; --amb-bd: #78540A;
+  --clay:     #F28B72; --clay-bg: #2A0E00;
+  --blue:     #93C5FD; --blue-bg: #080F22;
+  --bg:       #0D1A09; --surf: #152010; --text: #E8F5DF;
+  --text2:    #A8C890; --text3:  #5A7048;
+  --bdr:      #2A3E1E; --div: #1A2A14; color-scheme: dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Nunito',system-ui,sans-serif}
+
+/* HEADER */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);background:var(--court);z-index:50;user-select:none}
+.hdr-top{display:flex;align-items:center;padding:12px 16px;gap:10px}
+.hdr-title{font-size:17px;font-weight:900;color:#fff;flex:1;letter-spacing:-.2px}
+.ibtn{background:rgba(255,255,255,.18);border:none;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:17px;flex-shrink:0}
+.ibtn:active{background:rgba(255,255,255,.32)}
+.mnav{display:flex;align-items:center;justify-content:center;padding:2px 16px 12px;gap:16px}
+.mmonth{font-size:14px;font-weight:800;color:rgba(255,255,255,.95);min-width:140px;text-align:center;text-transform:capitalize}
+.mbtn{background:rgba(255,255,255,.2);border:none;border-radius:50%;width:28px;height:28px;color:#fff;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center}
+.mbtn:active{background:rgba(255,255,255,.38)}
+
+/* ALERT */
+.alert{display:flex;align-items:flex-start;gap:10px;margin:12px 16px 4px;background:var(--amb-bg);border:1.5px solid var(--amb-bd);border-radius:12px;padding:12px 14px}
+.alert.hidden{display:none}
+.alert-ico{font-size:20px;flex-shrink:0;margin-top:1px}
+.alert-body{flex:1}
+.alert-title{font-size:13px;font-weight:800;color:var(--amber)}
+.alert-sub{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.5}
+.alert-pay{display:inline-block;margin-top:8px;background:var(--amber);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit}
+
+/* SUMMARY */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 16px 4px}
+.card{background:var(--surf);border:1.5px solid var(--bdr);border-radius:14px;padding:14px 14px 12px}
+.card.c-total{background:var(--court);border-color:var(--court);grid-column:1/-1}
+.card-n{font-size:34px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums}
+.card.c-given .card-n{color:var(--court-lt)} .card.c-canceled .card-n{color:var(--clay)}
+.card.c-makeup .card-n{color:var(--blue)} .card.c-total .card-n{color:#fff;font-size:26px}
+.card-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-top:5px}
+.card.c-total .card-lbl{color:rgba(255,255,255,.75)}
+
+/* SECTIONS */
+main{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 72px)}
+.sec{display:none;padding:4px 0 0}
+.sec.active{display:block}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 6px}
+.sec-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--text3)}
+
+/* LESSON ROW */
+.lesson{display:flex;align-items:center;background:var(--surf);border-bottom:1px solid var(--div);padding:12px 16px;gap:12px;cursor:pointer}
+.lesson:active{background:var(--bg)}
+.ldot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:2px}
+.ldot-given{background:var(--court-lt)} .ldot-canceled_student,.ldot-canceled_teacher{background:var(--clay)} .ldot-makeup{background:var(--blue)}
+.linfo{flex:1;min-width:0}
+.ldate{font-size:14px;font-weight:700;color:var(--text)}
+.ltype-row{display:flex;align-items:center;gap:6px;margin-top:3px}
+.lbadge{font-size:10px;font-weight:800;border-radius:4px;padding:2px 7px;text-transform:uppercase;letter-spacing:.3px;flex-shrink:0}
+.b-given{background:var(--court-xl);color:var(--court-lt)}
+.b-canceled_student,.b-canceled_teacher{background:var(--clay-bg);color:var(--clay)}
+.b-makeup{background:var(--blue-bg);color:var(--blue)}
+.lreason{font-size:11px;color:var(--clay);font-style:italic;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px}
+.lchev{color:var(--text3);font-size:18px;margin-left:auto}
+
+/* PAYMENTS */
+.pay-item{display:flex;align-items:center;background:var(--surf);border-bottom:1px solid var(--div);padding:14px 16px;gap:12px}
+.pay-ico{font-size:22px;flex-shrink:0}
+.pay-info{flex:1}
+.pay-month{font-size:14px;font-weight:800;color:var(--text);text-transform:capitalize}
+.pay-detail{font-size:12px;color:var(--text3);margin-top:2px}
+.pay-amt{font-size:16px;font-weight:900;color:var(--court-lt);font-variant-numeric:tabular-nums}
+
+/* EMPTY */
+.empty{text-align:center;padding:52px 24px;color:var(--text3)}
+.empty-ico{font-size:48px;margin-bottom:10px}
+.empty-txt{font-size:13px;line-height:1.6}
+
+/* FAB */
+.fab{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px)+76px);right:20px;width:52px;height:52px;background:var(--court-lt);border:none;border-radius:50%;color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.28);z-index:40;transition:transform .15s}
+.fab:active{transform:scale(.93)}
+.fab.hidden{display:none}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;padding-bottom:env(safe-area-inset-bottom,0px);background:var(--surf);border-top:1px solid var(--bdr);display:flex;z-index:50}
+.nnav{flex:1;border:none;background:none;display:flex;flex-direction:column;align-items:center;padding:9px 4px 8px;cursor:pointer;color:var(--text3);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;gap:3px;font-family:inherit}
+.nnav.active{color:var(--court-lt)}
+.nnav svg{width:22px;height:22px}
+
+/* OVERLAYS */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100}
+.overlay.open{display:flex;align-items:flex-end}
+.sheet{background:var(--surf);width:100%;max-height:92vh;border-radius:20px 20px 0 0;padding:16px 20px calc(env(safe-area-inset-bottom,0px)+24px);overflow-y:auto}
+.sh-handle{width:36px;height:4px;background:var(--bdr);border-radius:2px;margin:0 auto 18px}
+.sh-title{font-size:18px;font-weight:900;margin-bottom:18px;letter-spacing:-.2px}
+
+/* FORM */
+.fld{margin-bottom:14px}
+.flbl{font-size:11px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.finput,.fsel,.fta{width:100%;padding:11px 13px;background:var(--bg);color:var(--text);border:1.5px solid var(--bdr);border-radius:10px;font-size:15px;font-family:inherit;outline:none}
+.finput:focus,.fsel:focus,.fta:focus{border-color:var(--court-lt)}
+.fta{resize:none;min-height:70px}
+
+/* TYPE GRID */
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.topt{border:2px solid var(--bdr);border-radius:10px;padding:11px 8px;text-align:center;cursor:pointer;font-size:12px;font-weight:800;color:var(--text3);background:var(--bg);transition:border-color .12s,background .12s,color .12s;line-height:1.3}
+.topt .topt-ico{display:block;font-size:20px;margin-bottom:4px}
+.topt.sel-given{border-color:var(--court-lt);background:var(--court-xl);color:var(--court-lt)}
+.topt.sel-canceled_student,.topt.sel-canceled_teacher{border-color:var(--clay);background:var(--clay-bg);color:var(--clay)}
+.topt.sel-makeup{border-color:var(--blue);background:var(--blue-bg);color:var(--blue)}
+
+/* BUTTONS */
+.btn-p{width:100%;padding:14px;border:none;border-radius:12px;background:var(--court-lt);color:#fff;font-size:15px;font-weight:900;cursor:pointer;margin-top:10px;font-family:inherit}
+.btn-p:active{opacity:.85}
+.btn-s{width:100%;padding:12px;border:1.5px solid var(--bdr);border-radius:12px;background:none;color:var(--text2);font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;font-family:inherit}
+.btn-d{width:100%;padding:12px;border:1.5px solid var(--clay);border-radius:12px;background:none;color:var(--clay);font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;font-family:inherit}
+
+/* CONFIRM */
+.cnf-box{text-align:center;padding:8px 0 4px}
+.cnf-ico{font-size:44px;margin-bottom:12px}
+.cnf-title{font-size:16px;font-weight:900;margin-bottom:6px}
+.cnf-txt{font-size:13px;color:var(--text2);line-height:1.6}
+
+/* SETTINGS */
+.stg-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.stg-lbl{font-size:14px;color:var(--text)}
+.theme-grp{display:flex;border:1.5px solid var(--bdr);border-radius:8px;overflow:hidden}
+.th-btn{padding:6px 12px;font-size:12px;font-weight:700;border:none;background:var(--bg);color:var(--text2);cursor:pointer;font-family:inherit}
+.th-btn.active{background:var(--court-lt);color:#fff}
+.seg-ctrl{display:flex;width:100%;border:1.5px solid var(--bdr);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.seg-btn{flex:1;padding:10px 6px;font-size:13px;font-weight:800;border:none;background:var(--bg);color:var(--text2);cursor:pointer;font-family:inherit;transition:background .12s,color .12s;text-align:center}
+.seg-btn.active{background:var(--court-lt);color:#fff}
+.pay-day-row{display:flex;align-items:center;gap:8px}
+.pay-day-row .finput{text-align:center}
+.pay-day-sep{font-size:13px;color:var(--text3);white-space:nowrap}
+.stg-sec{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--bdr);padding-bottom:6px;margin:18px 0 14px}
+</style>
+
+<!-- ─── APP MARKUP ─────────────────────────────────────────── -->
+<header class="hdr">
+  <div class="hdr-top">
+    <span class="hdr-title">🎾 Minhas Aulas</span>
+    <button class="ibtn" onclick="openSettings()" aria-label="Configurações" title="Configurações">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+  </div>
+  <div class="mnav">
+    <button class="mbtn" onclick="changeMonth(-1)" aria-label="Mês anterior">‹</button>
+    <span class="mmonth" id="month-label">—</span>
+    <button class="mbtn" onclick="changeMonth(1)" aria-label="Próximo mês">›</button>
+  </div>
+</header>
+
+<div class="alert hidden" id="pay-alert">
+  <span class="alert-ico">💰</span>
+  <div class="alert-body">
+    <div class="alert-title" id="pay-alert-title">Pagamento pendente</div>
+    <div class="alert-sub" id="pay-alert-sub">—</div>
+    <button class="alert-pay" onclick="openPayModal()">Registrar pagamento</button>
+  </div>
+</div>
+
+<main>
+  <!-- AULAS TAB -->
+  <div id="sec-aulas" class="sec active">
+    <div id="lessons-list"></div>
+  </div>
+
+  <!-- RESUMO TAB -->
+  <div id="sec-resumo" class="sec">
+    <div class="cards" id="summary-cards"></div>
+    <div class="sec-hdr"><span class="sec-title">Aulas do mês</span></div>
+    <div id="resumo-list"></div>
+  </div>
+
+  <!-- PAGAMENTOS TAB -->
+  <div id="sec-pag" class="sec">
+    <div class="sec-hdr"><span class="sec-title">Histórico de pagamentos</span></div>
+    <div id="payments-list"></div>
+  </div>
+</main>
+
+<!-- FAB -->
+<button class="fab" id="fab" onclick="openAddLesson()" aria-label="Adicionar aula">＋</button>
+
+<!-- BOTTOM NAV -->
+<nav class="bnav">
+  <button class="nnav active" id="nav-aulas" onclick="showTab('aulas')" aria-label="Aulas">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    Aulas
+  </button>
+  <button class="nnav" id="nav-resumo" onclick="showTab('resumo')" aria-label="Resumo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    Resumo
+  </button>
+  <button class="nnav" id="nav-pag" onclick="showTab('pag')" aria-label="Pagamentos">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+    Pagamentos
+  </button>
+</nav>
+
+<!-- ─── LESSON MODAL ─────────────────────────────────── -->
+<div class="overlay" id="ov-lesson" onclick="handleOvClick(event,'ov-lesson')">
+  <div class="sheet">
+    <div class="sh-handle"></div>
+    <div class="sh-title" id="lesson-modal-title">Nova Aula</div>
+
+    <div class="fld">
+      <div class="flbl">Data</div>
+      <input class="finput" type="date" id="f-date">
+    </div>
+
+    <div class="fld">
+      <div class="flbl">Tipo</div>
+      <div class="type-grid" id="type-grid">
+        <div class="topt" data-val="given"            onclick="selectType('given')">            <span class="topt-ico">✅</span>Aula dada</div>
+        <div class="topt" data-val="makeup"           onclick="selectType('makeup')">           <span class="topt-ico">🔄</span>Reposição</div>
+        <div class="topt" data-val="canceled_student" onclick="selectType('canceled_student')"><span class="topt-ico">🙋</span>Cancelei eu</div>
+        <div class="topt" data-val="canceled_teacher" onclick="selectType('canceled_teacher')"><span class="topt-ico">👨‍🏫</span>Cancelou prof.</div>
+      </div>
+    </div>
+
+    <div class="fld" id="f-reason-wrap">
+      <div class="flbl">Motivo do cancelamento</div>
+      <input class="finput" type="text" id="f-reason" placeholder="ex: viagem, chuva, compromisso…">
+    </div>
+
+    <div class="fld">
+      <div class="flbl">Observações (opcional)</div>
+      <textarea class="fta" id="f-notes" placeholder="ex: trabalhamos o saque, boa evolução…"></textarea>
+    </div>
+
+    <button class="btn-p" id="lesson-save-btn" onclick="saveLesson()">Salvar Aula</button>
+    <button class="btn-d hidden" id="lesson-del-btn" onclick="confirmDelete()">Excluir aula</button>
+    <button class="btn-s" onclick="closeOverlay('ov-lesson')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ─── CONFIRM DELETE ───────────────────────────────── -->
+<div class="overlay" id="ov-confirm" onclick="handleOvClick(event,'ov-confirm')">
+  <div class="sheet">
+    <div class="sh-handle"></div>
+    <div class="cnf-box">
+      <div class="cnf-ico">🗑️</div>
+      <div class="cnf-title">Excluir aula?</div>
+      <div class="cnf-txt">Esta ação não pode ser desfeita.</div>
+    </div>
+    <button class="btn-d" onclick="deleteLesson()">Sim, excluir</button>
+    <button class="btn-s" onclick="closeOverlay('ov-confirm')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ─── PAY MODAL ────────────────────────────────────── -->
+<div class="overlay" id="ov-pay" onclick="handleOvClick(event,'ov-pay')">
+  <div class="sheet">
+    <div class="sh-handle"></div>
+    <div class="sh-title">Registrar Pagamento</div>
+    <div class="fld">
+      <div class="flbl">Mês referência</div>
+      <input class="finput" type="text" id="p-month-lbl" readonly style="cursor:default;color:var(--text2)">
+    </div>
+    <div class="fld">
+      <div class="flbl">Aulas cobráveis (dadas + reposições)</div>
+      <input class="finput" type="number" id="p-count" min="0">
+    </div>
+    <div class="fld">
+      <div class="flbl">Valor pago (R$)</div>
+      <input class="finput" type="number" id="p-amount" min="0" step="0.01" placeholder="0,00">
+    </div>
+    <div class="fld">
+      <div class="flbl">Observações (opcional)</div>
+      <input class="finput" type="text" id="p-notes" placeholder="ex: Pix, dinheiro…">
+    </div>
+    <button class="btn-p" onclick="savePayment()">✓ Confirmar pagamento</button>
+    <button class="btn-s" onclick="closeOverlay('ov-pay')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ─── SETTINGS ─────────────────────────────────────── -->
+<div class="overlay" id="ov-settings" onclick="handleOvClick(event,'ov-settings')">
+  <div class="sheet">
+    <div class="sh-handle"></div>
+    <div class="sh-title">Configurações</div>
+
+    <div class="stg-sec">Professor</div>
+    <div class="fld">
+      <div class="flbl">Nome do professor</div>
+      <input class="finput" type="text" id="s-teacher" placeholder="ex: Eduardo, Prof. Carlos…">
+    </div>
+
+    <div class="stg-sec">Cobrança</div>
+    <div class="fld">
+      <div class="flbl">Modalidade de pagamento</div>
+      <div class="seg-ctrl">
+        <button class="seg-btn active" id="pm-per-lesson" onclick="setPriceMode('per_lesson')">Por aula</button>
+        <button class="seg-btn" id="pm-monthly" onclick="setPriceMode('monthly')">Mensal fixo</button>
+      </div>
+    </div>
+    <div class="fld" id="s-price-wrap">
+      <div class="flbl">Valor por aula (R$)</div>
+      <input class="finput" type="number" id="s-price" min="0" step="0.01" placeholder="0,00">
+    </div>
+    <div class="fld" id="s-monthly-wrap" style="display:none">
+      <div class="flbl">Valor mensal fixo (R$)</div>
+      <input class="finput" type="number" id="s-monthly" min="0" step="0.01" placeholder="0,00">
+    </div>
+
+    <div class="stg-sec">Lembrete de pagamento</div>
+    <div class="fld">
+      <div class="flbl">Avisar do mês seguinte — dia X ao dia Y</div>
+      <div class="pay-day-row">
+        <input class="finput" type="number" id="s-pay-start" min="1" max="28" placeholder="1" style="width:72px">
+        <span class="pay-day-sep">ao dia</span>
+        <input class="finput" type="number" id="s-pay-end" min="1" max="28" placeholder="7" style="width:72px">
+        <span class="pay-day-sep">do mês seguinte</span>
+      </div>
+    </div>
+
+    <div class="stg-sec">Aparência</div>
+    <div class="stg-row">
+      <span class="stg-lbl">Tema</span>
+      <div class="theme-grp">
+        <button class="th-btn" id="th-light" onclick="setTheme('light')">☀️</button>
+        <button class="th-btn" id="th-auto"  onclick="setTheme('auto')">Auto</button>
+        <button class="th-btn" id="th-dark"  onclick="setTheme('dark')">🌙</button>
+      </div>
+    </div>
+
+    <button class="btn-p" onclick="saveSettings()">Salvar</button>
+    <button class="btn-s" onclick="closeOverlay('ov-settings')">Fechar</button>
+  </div>
+</div>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+let DB = { lessons: [], payments: [], settings: { teacher: 'Professor', price: 0, priceMode: 'per_lesson', monthlyPrice: 0, payDayStart: 1, payDayEnd: 7, theme: 'auto' } };
+let SEL_PRICE_MODE = 'per_lesson';
+let CUR = { year: 0, month: 0 }; // 0-indexed month
+let EDITING_ID = null;
+let SEL_TYPE = 'given';
+let PAY_MONTH = null; // 'YYYY-MM'
+
+function load() {
+  try {
+    const raw = localStorage.getItem('tenis_aulas_v1');
+    if (raw) DB = JSON.parse(raw);
+  } catch(e) {}
+  applyTheme(DB.settings.theme || 'auto');
+}
+function save() {
+  try { localStorage.setItem('tenis_aulas_v1', JSON.stringify(DB)); } catch(e) {}
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+(function() {
+  load();
+  const now = new Date();
+  CUR = { year: now.getFullYear(), month: now.getMonth() };
+  render();
+})();
+
+// ─── MONTH NAV ────────────────────────────────────────────────────────────────
+function changeMonth(d) {
+  CUR.month += d;
+  if (CUR.month > 11) { CUR.month = 0; CUR.year++; }
+  if (CUR.month < 0)  { CUR.month = 11; CUR.year--; }
+  render();
+}
+
+function monthKey(y, m) { return `${y}-${String(m+1).padStart(2,'0')}`; }
+function curKey() { return monthKey(CUR.year, CUR.month); }
+function monthLabel(y, m) {
+  return new Date(y, m, 1).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function render() {
+  document.getElementById('month-label').textContent = monthLabel(CUR.year, CUR.month);
+  renderAlert();
+  renderLessons();
+  renderSummary();
+  renderPayments();
+}
+
+function lessonsForMonth(key) {
+  return DB.lessons.filter(l => l.date.slice(0,7) === key)
+    .sort((a,b) => b.date.localeCompare(a.date));
+}
+
+function billableCount(key) {
+  return DB.lessons.filter(l => l.date.slice(0,7) === key && (l.type === 'given' || l.type === 'makeup')).length;
+}
+
+function calcAmount(key) {
+  const s = DB.settings;
+  if (s.priceMode === 'monthly') return s.monthlyPrice || 0;
+  return billableCount(key) * (s.price || 0);
+}
+
+function isPaid(key) {
+  return DB.payments.some(p => p.month === key);
+}
+
+function renderAlert() {
+  const now = new Date();
+  const day = now.getDate();
+  const ds = parseInt(DB.settings.payDayStart) || 1;
+  const de = parseInt(DB.settings.payDayEnd)   || 7;
+  const alertEl = document.getElementById('pay-alert');
+  if (day >= ds && day <= de) {
+    let pm = now.getMonth() - 1; let py = now.getFullYear();
+    if (pm < 0) { pm = 11; py--; }
+    const prevKey = monthKey(py, pm);
+    const count = billableCount(prevKey);
+    if (count > 0 && !isPaid(prevKey)) {
+      PAY_MONTH = prevKey;
+      const total = calcAmount(prevKey);
+      const lbl = monthLabel(py, pm);
+      const s = DB.settings;
+      document.getElementById('pay-alert-title').textContent =
+        `Pagar ${s.teacher || 'professor'} — ${lbl}`;
+      const modeInfo = s.priceMode === 'monthly'
+        ? (s.monthlyPrice > 0 ? ` · Mensal fixo` : ' · Configure o valor')
+        : `${count} aula${count>1?'s':''}`;
+      document.getElementById('pay-alert-sub').textContent =
+        modeInfo + (total > 0 ? ` · R$ ${total.toFixed(2).replace('.',',')}` : ' · Configure o valor');
+      alertEl.classList.remove('hidden');
+      return;
+    }
+  }
+  alertEl.classList.add('hidden');
+}
+
+function typeLabel(t) {
+  const m = { given:'Aula dada', canceled_student:'Cancelada por mim', canceled_teacher:'Cancelada pelo professor', makeup:'Reposição' };
+  return m[t] || t;
+}
+function typeBadgeClass(t) { return 'b-' + t; }
+function dotClass(t) { return 'ldot-' + t; }
+
+function renderLessons() {
+  const list = document.getElementById('lessons-list');
+  const lessons = lessonsForMonth(curKey());
+  if (!lessons.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-ico">📅</div>
+      <div class="empty-txt">Nenhuma aula registrada<br>para este mês.<br><br>Toque em <strong>＋</strong> para adicionar.</div></div>`;
+    return;
+  }
+  list.innerHTML = lessons.map(l => lessonRow(l)).join('');
+}
+
+function lessonRow(l) {
+  const d = new Date(l.date + 'T12:00:00');
+  const dateFmt = d.toLocaleDateString('pt-BR', { weekday: 'short', day: 'numeric', month: 'short' });
+  const reasonHtml = l.reason ? `<span class="lreason">${esc(l.reason)}</span>` : '';
+  return `<div class="lesson" onclick="openEditLesson('${l.id}')">
+    <div class="ldot ${dotClass(l.type)}"></div>
+    <div class="linfo">
+      <div class="ldate">${dateFmt}</div>
+      <div class="ltype-row">
+        <span class="lbadge ${typeBadgeClass(l.type)}">${typeLabel(l.type)}</span>
+        ${reasonHtml}
+      </div>
+      ${l.notes ? `<div style="font-size:11px;color:var(--text3);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.notes)}</div>` : ''}
+    </div>
+    <span class="lchev">›</span>
+  </div>`;
+}
+
+function renderSummary() {
+  const key = curKey();
+  const lessons = lessonsForMonth(key);
+  const given   = lessons.filter(l => l.type === 'given').length;
+  const canceled= lessons.filter(l => l.type.startsWith('canceled')).length;
+  const makeup  = lessons.filter(l => l.type === 'makeup').length;
+  const billable= given + makeup;
+  const total   = calcAmount(key);
+  const s       = DB.settings;
+  const modeLabel = s.priceMode === 'monthly' ? 'Mensal fixo' : `${billable} aula${billable!==1?'s':''}`;
+  const totalLabel = total > 0 ? 'R$ '+total.toFixed(2).replace('.',',') : (s.priceMode==='monthly' ? 'Mensal fixo' : billable+' aulas');
+  const statusLabel = isPaid(key) ? '✅ Pago' : (total > 0 ? 'A pagar' : 'Configure o valor');
+
+  const payBtnHtml = isPaid(key)
+    ? `<div style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--court-xl);border-radius:10px;margin:0 16px;font-size:13px;font-weight:700;color:var(--court-lt)">✅ Pagamento registrado</div>`
+    : `<button onclick="openPayForMonth('${key}')" style="display:flex;align-items:center;justify-content:center;gap:8px;width:calc(100% - 32px);margin:0 16px;padding:13px;background:var(--court-lt);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:900;cursor:pointer;font-family:inherit">💳 Registrar pagamento${total > 0 ? ' · R$ '+total.toFixed(2).replace('.',',') : ''}</button>`;
+
+  document.getElementById('summary-cards').innerHTML = `
+    <div class="card c-given"><div class="card-n">${given}</div><div class="card-lbl">✅ Aulas dadas</div></div>
+    <div class="card c-canceled"><div class="card-n">${canceled}</div><div class="card-lbl">❌ Canceladas</div></div>
+    <div class="card c-makeup"><div class="card-n">${makeup}</div><div class="card-lbl">🔄 Reposições</div></div>
+    <div class="card c-total">
+      <div class="card-n">${totalLabel}</div>
+      <div class="card-lbl">${statusLabel} · ${modeLabel}</div>
+    </div>
+    ${payBtnHtml}`;
+
+  const rlist = document.getElementById('resumo-list');
+  if (!lessons.length) {
+    rlist.innerHTML = `<div class="empty"><div class="empty-ico">📊</div><div class="empty-txt">Sem aulas neste mês</div></div>`;
+  } else {
+    rlist.innerHTML = lessons.map(l => lessonRow(l)).join('');
+  }
+}
+
+function renderPayments() {
+  const plist = document.getElementById('payments-list');
+  if (!DB.payments.length) {
+    plist.innerHTML = `<div class="empty"><div class="empty-ico">💳</div><div class="empty-txt">Nenhum pagamento<br>registrado ainda.</div></div>`;
+    return;
+  }
+  const sorted = [...DB.payments].sort((a,b) => b.month.localeCompare(a.month));
+  plist.innerHTML = sorted.map(p => {
+    const [y,m] = p.month.split('-').map(Number);
+    const lbl = monthLabel(y, m-1);
+    const dt = new Date(p.paidAt).toLocaleDateString('pt-BR', { day:'numeric', month:'short', year:'numeric' });
+    return `<div class="pay-item">
+      <span class="pay-ico">✅</span>
+      <div class="pay-info">
+        <div class="pay-month">${lbl}</div>
+        <div class="pay-detail">${p.lessonsCount} aula${p.lessonsCount!==1?'s':''} · pago em ${dt}${p.notes ? ' · '+esc(p.notes) : ''}</div>
+      </div>
+      <div class="pay-amt">R$ ${Number(p.amount).toFixed(2).replace('.',',')}</div>
+    </div>`;
+  }).join('');
+}
+
+// ─── TABS ─────────────────────────────────────────────────────────────────────
+function showTab(id) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nnav').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  document.getElementById('nav-' + id).classList.add('active');
+  document.getElementById('fab').classList.toggle('hidden', id !== 'aulas');
+  if (id === 'resumo') renderSummary();
+  if (id === 'pag')    renderPayments();
+}
+
+// ─── ADD / EDIT LESSON ────────────────────────────────────────────────────────
+function openAddLesson() {
+  EDITING_ID = null;
+  document.getElementById('lesson-modal-title').textContent = 'Nova Aula';
+  document.getElementById('f-date').value = todayISO();
+  document.getElementById('f-reason').value = '';
+  document.getElementById('f-notes').value = '';
+  document.getElementById('lesson-del-btn').classList.add('hidden');
+  document.getElementById('lesson-save-btn').textContent = 'Salvar Aula';
+  selectType('given');
+  document.getElementById('ov-lesson').classList.add('open');
+}
+
+function openEditLesson(id) {
+  const l = DB.lessons.find(x => x.id === id);
+  if (!l) return;
+  EDITING_ID = id;
+  document.getElementById('lesson-modal-title').textContent = 'Editar Aula';
+  document.getElementById('f-date').value = l.date;
+  document.getElementById('f-reason').value = l.reason || '';
+  document.getElementById('f-notes').value = l.notes || '';
+  document.getElementById('lesson-del-btn').classList.remove('hidden');
+  document.getElementById('lesson-save-btn').textContent = 'Atualizar Aula';
+  selectType(l.type);
+  document.getElementById('ov-lesson').classList.add('open');
+}
+
+function selectType(t) {
+  SEL_TYPE = t;
+  document.querySelectorAll('.topt').forEach(el => {
+    el.className = 'topt' + (el.dataset.val === t ? ' sel-' + t : '');
+  });
+  const needReason = t.startsWith('canceled');
+  document.getElementById('f-reason-wrap').style.display = needReason ? '' : 'none';
+}
+
+function saveLesson() {
+  const date = document.getElementById('f-date').value;
+  if (!date) { alert('Selecione a data'); return; }
+  const reason = document.getElementById('f-reason').value.trim();
+  const notes  = document.getElementById('f-notes').value.trim();
+
+  if (EDITING_ID) {
+    const l = DB.lessons.find(x => x.id === EDITING_ID);
+    if (l) { l.date = date; l.type = SEL_TYPE; l.reason = reason; l.notes = notes; }
+  } else {
+    DB.lessons.push({ id: uid(), date, type: SEL_TYPE, reason, notes, createdAt: Date.now() });
+  }
+  save(); closeOverlay('ov-lesson'); render();
+}
+
+function confirmDelete() {
+  closeOverlay('ov-lesson');
+  setTimeout(() => document.getElementById('ov-confirm').classList.add('open'), 200);
+}
+
+function deleteLesson() {
+  if (!EDITING_ID) return;
+  DB.lessons = DB.lessons.filter(l => l.id !== EDITING_ID);
+  EDITING_ID = null;
+  save(); closeOverlay('ov-confirm'); render();
+}
+
+// ─── PAYMENT ──────────────────────────────────────────────────────────────────
+function openPayForMonth(key) {
+  PAY_MONTH = key;
+  openPayModal();
+}
+
+function openPayModal() {
+  const key = PAY_MONTH || curKey();
+  const [y,m] = key.split('-').map(Number);
+  const count = billableCount(key);
+  const total = calcAmount(key);
+  document.getElementById('p-month-lbl').value = monthLabel(y, m-1);
+  document.getElementById('p-count').value = count;
+  document.getElementById('p-amount').value = total > 0 ? total.toFixed(2) : '';
+  document.getElementById('p-notes').value = '';
+  document.getElementById('ov-pay').classList.add('open');
+}
+
+function savePayment() {
+  const key = PAY_MONTH || curKey();
+  const count = parseInt(document.getElementById('p-count').value) || 0;
+  const amount = parseFloat(document.getElementById('p-amount').value) || 0;
+  const notes = document.getElementById('p-notes').value.trim();
+  DB.payments.push({ id: uid(), month: key, lessonsCount: count, amount, paidAt: Date.now(), notes });
+  save(); closeOverlay('ov-pay'); render();
+}
+
+// ─── SETTINGS ─────────────────────────────────────────────────────────────────
+function openSettings() {
+  const s = DB.settings;
+  document.getElementById('s-teacher').value   = s.teacher      || '';
+  document.getElementById('s-price').value      = s.price        || '';
+  document.getElementById('s-monthly').value    = s.monthlyPrice || '';
+  document.getElementById('s-pay-start').value  = s.payDayStart  || 1;
+  document.getElementById('s-pay-end').value    = s.payDayEnd    || 7;
+  SEL_PRICE_MODE = s.priceMode || 'per_lesson';
+  updatePriceModeUI();
+  updateThemeBtns();
+  document.getElementById('ov-settings').classList.add('open');
+}
+
+function saveSettings() {
+  const s = DB.settings;
+  s.teacher      = document.getElementById('s-teacher').value.trim() || 'Professor';
+  s.priceMode    = SEL_PRICE_MODE;
+  s.price        = parseFloat(document.getElementById('s-price').value)   || 0;
+  s.monthlyPrice = parseFloat(document.getElementById('s-monthly').value) || 0;
+  s.payDayStart  = Math.min(28, Math.max(1, parseInt(document.getElementById('s-pay-start').value) || 1));
+  s.payDayEnd    = Math.min(28, Math.max(1, parseInt(document.getElementById('s-pay-end').value)   || 7));
+  if (s.payDayEnd < s.payDayStart) s.payDayEnd = s.payDayStart;
+  save(); closeOverlay('ov-settings'); render();
+}
+
+function setPriceMode(mode) {
+  SEL_PRICE_MODE = mode;
+  updatePriceModeUI();
+}
+
+function updatePriceModeUI() {
+  document.getElementById('pm-per-lesson').classList.toggle('active', SEL_PRICE_MODE === 'per_lesson');
+  document.getElementById('pm-monthly').classList.toggle('active',    SEL_PRICE_MODE === 'monthly');
+  document.getElementById('s-price-wrap').style.display   = SEL_PRICE_MODE === 'per_lesson' ? '' : 'none';
+  document.getElementById('s-monthly-wrap').style.display = SEL_PRICE_MODE === 'monthly'    ? '' : 'none';
+}
+
+function setTheme(t) {
+  DB.settings.theme = t; save();
+  applyTheme(t); updateThemeBtns();
+}
+function applyTheme(t) {
+  const r = document.documentElement;
+  if (t === 'dark')  r.setAttribute('data-theme','dark');
+  else if (t === 'light') r.setAttribute('data-theme','light');
+  else r.removeAttribute('data-theme');
+}
+function updateThemeBtns() {
+  ['light','auto','dark'].forEach(t => {
+    document.getElementById('th-'+t).classList.toggle('active', (DB.settings.theme||'auto') === t);
+  });
+}
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
+function closeOverlay(id) { document.getElementById(id).classList.remove('open'); }
+function handleOvClick(e, id) { if (e.target === document.getElementById(id)) closeOverlay(id); }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function todayISO() { return new Date().toISOString().slice(0,10); }
+
+// Close overlays on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.overlay.open').forEach(o => o.classList.remove('open'));
+});
+
+// Initialize reason field visibility
+selectType('given');
+</script>
