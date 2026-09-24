@@ -401,6 +401,14 @@ main{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 72px)}
       </div>
     </div>
 
+    <div class="stg-sec">Backup</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+      <button class="btn-s" style="margin:0" onclick="exportBackup()">⬇️ Exportar JSON</button>
+      <button class="btn-s" style="margin:0" onclick="document.getElementById('import-file').click()">⬆️ Importar JSON</button>
+    </div>
+    <input type="file" id="import-file" accept=".json,application/json" style="display:none" onchange="importBackup(event)">
+    <div id="backup-msg" style="display:none;font-size:12px;padding:8px 10px;border-radius:8px;margin-bottom:8px"></div>
+
     <button class="btn-p" onclick="saveSettings()">Salvar</button>
     <button class="btn-s" onclick="closeOverlay('ov-settings')">Fechar</button>
   </div>
@@ -857,6 +865,53 @@ function updateThemeBtns() {
   ['light','auto','dark'].forEach(t => {
     document.getElementById('th-'+t).classList.toggle('active', (DB.settings.theme||'auto') === t);
   });
+}
+
+// ─── BACKUP ───────────────────────────────────────────────────────────────────
+function exportBackup() {
+  const json = JSON.stringify(DB, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const date = new Date().toISOString().slice(0, 10);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `aulas_tenis_${date}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+  showBackupMsg('✅ Arquivo baixado: aulas_tenis_' + date + '.json', true);
+}
+
+function importBackup(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (!Array.isArray(data.lessons) || !Array.isArray(data.payments)) {
+        throw new Error('Arquivo inválido — verifique se é um backup gerado por este app.');
+      }
+      DB = { lessons: data.lessons, payments: data.payments, settings: { ...DB.settings, ...data.settings } };
+      save();
+      render();
+      showBackupMsg('✅ Dados importados: ' + data.lessons.length + ' aulas, ' + data.payments.length + ' pagamentos.', true);
+    } catch(err) {
+      showBackupMsg('❌ Erro: ' + err.message, false);
+    }
+    e.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function showBackupMsg(txt, ok) {
+  const el = document.getElementById('backup-msg');
+  el.textContent = txt;
+  el.style.display = 'block';
+  el.style.background = ok ? 'var(--court-xl)' : 'var(--clay-bg)';
+  el.style.color = ok ? 'var(--court-lt)' : 'var(--clay)';
+  setTimeout(() => { el.style.display = 'none'; }, 4000);
 }
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
