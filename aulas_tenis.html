@@ -669,27 +669,76 @@ function renderSummary() {
   }
 }
 
+function unpaidMonths() {
+  // All months that have billable lessons and are not paid, sorted oldest first
+  const keys = new Set(DB.lessons.map(l => l.date.slice(0,7)));
+  return [...keys]
+    .filter(k => billableCount(k) > 0 && !isPaid(k))
+    .sort((a,b) => a.localeCompare(b));
+}
+
 function renderPayments() {
   const plist = document.getElementById('payments-list');
-  if (!DB.payments.length) {
+
+  // ── Meses em aberto ──
+  const open = unpaidMonths();
+  let openHtml = '';
+  if (open.length) {
+    const totalDue = open.reduce((sum, k) => sum + calcAmount(k), 0);
+    const rows = open.map(k => {
+      const [y,m] = k.split('-').map(Number);
+      const lbl = monthLabel(y, m-1);
+      const cnt = billableCount(k);
+      const amt = calcAmount(k);
+      return `<div class="pay-item" style="background:var(--amb-bg);cursor:pointer" onclick="openPayForMonth('${k}')">
+        <span class="pay-ico">⚠️</span>
+        <div class="pay-info">
+          <div class="pay-month" style="color:var(--amber)">${lbl}</div>
+          <div class="pay-detail">${cnt} aula${cnt!==1?'s':''} · toque para pagar</div>
+        </div>
+        ${amt > 0 ? `<div class="pay-amt" style="color:var(--amber)">R$ ${amt.toFixed(2).replace('.',',')}</div>` : ''}
+      </div>`;
+    }).join('');
+
+    openHtml = `
+      <div style="padding:12px 20px 6px">
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--amber)">
+          ⚠️ ${open.length} ${open.length===1?'mês em aberto':'meses em aberto'}
+          ${totalDue > 0 ? `· R$ ${totalDue.toFixed(2).replace('.',',')} total` : ''}
+        </div>
+      </div>
+      ${rows}
+      <div style="height:1px;background:var(--bdr);margin:8px 20px 4px"></div>`;
+  }
+
+  // ── Histórico pago ──
+  if (!DB.payments.length && !open.length) {
     plist.innerHTML = `<div class="empty"><div class="empty-ico">💳</div><div class="empty-txt">Nenhum pagamento<br>registrado ainda.</div></div>`;
     return;
   }
+
   const sorted = [...DB.payments].sort((a,b) => b.month.localeCompare(a.month));
-  plist.innerHTML = sorted.map(p => {
-    const [y,m] = p.month.split('-').map(Number);
-    const lbl = monthLabel(y, m-1);
-    const dt = new Date(p.paidAt).toLocaleDateString('pt-BR', { day:'numeric', month:'short', year:'numeric' });
-    return `<div class="pay-item">
-      <span class="pay-ico">✅</span>
-      <div class="pay-info">
-        <div class="pay-month">${lbl}</div>
-        <div class="pay-detail">${p.lessonsCount} aula${p.lessonsCount!==1?'s':''} · pago em ${dt}${p.notes ? ' · '+esc(p.notes) : ''}</div>
-      </div>
-      <div class="pay-amt">R$ ${Number(p.amount).toFixed(2).replace('.',',')}</div>
-      <button onclick="confirmDeletePayment('${p.id}')" style="background:none;border:none;cursor:pointer;color:var(--clay);font-size:18px;padding:4px 0 4px 10px;flex-shrink:0" aria-label="Excluir pagamento">🗑️</button>
-    </div>`;
-  }).join('');
+  const paidHtml = sorted.length
+    ? (sorted.length > 0 && open.length > 0
+        ? `<div style="padding:10px 20px 4px"><div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--text3)">Histórico pago</div></div>`
+        : '') +
+      sorted.map(p => {
+        const [y,m] = p.month.split('-').map(Number);
+        const lbl = monthLabel(y, m-1);
+        const dt = new Date(p.paidAt).toLocaleDateString('pt-BR', { day:'numeric', month:'short', year:'numeric' });
+        return `<div class="pay-item">
+          <span class="pay-ico">✅</span>
+          <div class="pay-info">
+            <div class="pay-month">${lbl}</div>
+            <div class="pay-detail">${p.lessonsCount} aula${p.lessonsCount!==1?'s':''} · pago em ${dt}${p.notes ? ' · '+esc(p.notes) : ''}</div>
+          </div>
+          <div class="pay-amt">R$ ${Number(p.amount).toFixed(2).replace('.',',')}</div>
+          <button onclick="confirmDeletePayment('${p.id}')" style="background:none;border:none;cursor:pointer;color:var(--clay);font-size:18px;padding:4px 0 4px 10px;flex-shrink:0" aria-label="Excluir pagamento">🗑️</button>
+        </div>`;
+      }).join('')
+    : '';
+
+  plist.innerHTML = openHtml + paidHtml;
 }
 
 // ─── TABS ─────────────────────────────────────────────────────────────────────
